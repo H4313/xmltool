@@ -29,15 +29,68 @@ void xmlerror(const char * msg)
 %%
 
 document
- : element 
+ : prolog element miscstar
+ ;
+ 
+ prolog
+ : miscstar prologend
+ ;
+ 
+ prologend
+ : doctypedecl miscstar
+ | /* vide */
+ ;
+ 
+ doctypedecl
+ : DOCTYPE NOM SUP
+ | DOCTYPE NOM NOM SUP
+ | DOCTYPE NOM NOM VALEUR SUP
+ ;
+ 
+ miscstar
+ : miscstar misc
+ | /* vide */
+ ;
+ 
+ misc
+ : COMMENT
+ | pi
  ;
 
 element
- : INF NOM SUP content
-   INF SLASH NOM SUP               
+ : INF NOM COLON NOM attributestar SLASH SUP
+ | INF NOM COLON NOM attributestar SUP content INF SLASH NOM COLON NOM SUP  
+ | INF NOM attributestar SLASH SUP
+ | INF NOM attributestar SUP content INF SLASH NOM SUP    
+ ;
+ 
+ attributestar
+ : attributestar attribute
+ | /* vide */
+ ;
+ 
+ attribute
+ : NOM EGAL VALEUR
+ | NOM COLON NOM EGAL VALEUR
  ;
 
 content
- : content element          
+ : content item          
  | /* vide */              
+ ;
+ 
+ item
+ : element
+ | cdsect
+ | pi
+ | COMMENT
+ | DONNEES
+ ;
+ 
+ cdsect
+ : CDATABEGIN CDATAEND
+ ;
+ 
+ pi
+ : INFSPECIAL NOM attributestar SUPSPECIAL
  ;
