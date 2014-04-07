@@ -6,6 +6,17 @@
 #include <string.h>
 #include <stdlib.h>
 #include "commun.h"
+#include "model/document.h"
+#include "model/docTypeDecl.h"
+#include "model/attribute.h"
+#include "model/cdSect.h"
+#include "model/comment.h"
+#include "model/donnees.h"
+#include "model/element.h"
+#include "model/misc.h"
+#include "model/item.h"
+#include "model/pi.h"
+#include "model/prolog.h"
 #include "xml.tab.h"
 
 #ifdef FLEXDEBUG

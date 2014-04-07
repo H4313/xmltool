@@ -8,7 +8,8 @@ using namespace std;
 
 class Item
 {
-	
+	public :
+		virtual void display() = 0;
 };
 
 #endif

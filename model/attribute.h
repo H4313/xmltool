@@ -15,6 +15,7 @@ class Attribute
 	public :
 		Attribute(string * n, string * v);
 		~Attribute();
+		void display();
 };
 
 #endif

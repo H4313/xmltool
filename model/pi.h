@@ -19,6 +19,7 @@ class PI : public Misc
 	public :
 		PI(string * t, vector<Attribute *> * a);
 		~PI();
+		void display();
 };
 
 #endif

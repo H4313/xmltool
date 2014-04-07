@@ -34,12 +34,12 @@ int main(int argc, char ** argv)
 			{
 			  cout<<"Entrée standard reconnue"<<endl;
 			  document->display();
+			  delete document;
 			}
 			else
 			{
 			  cout<<"Entrée standard non reconnue"<<endl;
 			}
-			delete document;
 		}
 		else if(strcmp(argv[1],"-v") == 0)
 		{

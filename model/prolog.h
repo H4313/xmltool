@@ -12,12 +12,14 @@ using namespace std;
 class Prolog
 {
 	private :
+		vector<Misc *> * miscsBeginning;
 		DocTypeDecl * docTypeDecl;
-		vector<Misc *> * miscs;
+		vector<Misc *> * miscsEnd;
 		
 	public :
-		Prolog(DocTypeDecl * d, vector<Misc *> * m);
+		Prolog(vector<Misc *> * m1, DocTypeDecl * d, vector<Misc *> * m2);
 		~Prolog();
+		void display();
 };
 
 #endif

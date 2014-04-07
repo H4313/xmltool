@@ -9,7 +9,8 @@ using namespace std;
 
 class Misc : public Item
 {
-
+	public :
+		virtual void display() = 0;
 };
 
 #endif

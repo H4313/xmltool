@@ -16,6 +16,7 @@ class Comment : public Misc
 	public :
 		Comment(string * c);
 		~Comment();
+		void display();
 };
 
 #endif

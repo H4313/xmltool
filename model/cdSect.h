@@ -16,6 +16,7 @@ class CDSect : public Item
 	public :
 		CDSect(string * d);
 		~CDSect();
+		void display();
 };
 
 #endif

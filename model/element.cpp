@@ -4,6 +4,7 @@
 
 #include <string>
 #include <vector>
+#include <iostream>
 
 using namespace std;
 
@@ -28,5 +29,33 @@ Element::~Element()
 			if((*items)[i]) delete (*items)[i];
 		}
 		delete items;
+	}
+}
+
+void Element::display()
+{
+	if(name)
+	{
+		cout<<"<"<<*name;
+		if(attributes)
+		{
+			for(int i = 0 ; i < attributes->size() ; i++)
+			{
+				if((*attributes)[i]) (*attributes)[i]->display();
+			}
+		}
+		if(items)
+		{
+			cout<<">"<<endl;
+			for(int i = 0 ; i < items->size() ; i++)
+			{
+				if((*items)[i]) (*items)[i]->display();
+			}
+			cout<<endl<<"</"<<*name<<">"<<endl;
+		}
+		else
+		{
+			cout<<"/>"<<endl;
+		}
 	}
 }

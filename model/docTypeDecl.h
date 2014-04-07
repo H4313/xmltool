@@ -10,11 +10,13 @@ class DocTypeDecl
 {
 	private :
 		string * name;
-		int externalID;
+		string * externalID;
+		string * data;
 		
 	public :
-		DocTypeDecl(string * n, int i);
+		DocTypeDecl(string * n, string * i, string * d);
 		~DocTypeDecl();
+		void display();
 };
 
 #endif

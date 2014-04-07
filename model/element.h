@@ -20,6 +20,7 @@ class Element : public Item
 	public :
 		Element(string * n, vector<Attribute *> * a, vector<Item *> * i);
 		~Element();
+		void display();
 };
 
 #endif

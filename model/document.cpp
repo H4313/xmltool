@@ -27,5 +27,18 @@ Document::~Document()
 
 void Document::display()
 {
-	cout<<"Test affichage document"<<endl;
+	cout<<"--- AFFICHAGE DU DOCUMENT XML PARSE ---"<<endl<<endl;
+	if(prolog && element)
+	{
+		prolog->display();
+		element->display();
+		if(miscs)
+		{
+			for(int i = 0 ; i < miscs->size() ; i++)
+			{
+				if((*miscs)[i]) (*miscs)[i]->display();
+			}
+		}
+	}
+	cout<<endl;
 }
