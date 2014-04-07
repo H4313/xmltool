@@ -7,12 +7,13 @@
 #include <cstdlib>
 using namespace std;
 #include "commun.h"
+#include "model/document.h"
 
 extern char xmltext[];
 
 int xmllex(void);  
 
-void xmlerror(const char * msg)
+void xmlerror(Document ** doc, const char * msg)
 {
    fprintf(stderr,"%s\n",msg);
 }
@@ -26,10 +27,12 @@ void xmlerror(const char * msg)
 %token EGAL SLASH SUP SUPSPECIAL DOCTYPE COLON INFSPECIAL INF CDATABEGIN
 %token <s> VALEUR DONNEES COMMENT NOM CDATAEND
 
+%parse-param {Document ** document}
+
 %%
 
 document
- : prolog element miscstar
+ : prolog element miscstar {*document = new Document(0,0,0);}
  ;
  
  prolog

@@ -1,0 +1,4 @@
+Test ID;Return code validation;Out result;StdErr result;File creation result;Global result
+TestCLIHelp;Echec;Ok;Echec;Non testé;Echec
+TestCLINoArgument;Echec;Ok;Echec;Non testé;Echec
+TestCLIParseNoFile;Echec;Ok;Echec;Non testé;Echec

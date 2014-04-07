@@ -1,4 +1,6 @@
 #include "commun.h"
+#include "model/document.h"
+
 #include <iostream>
 #include <cstring>
 #include <stdio.h>
@@ -6,7 +8,7 @@
 using namespace std;
 
 extern FILE * xmlin;
-int xmlparse(void);
+int xmlparse(Document **);
 extern int xmldebug;
 
 int main(int argc, char ** argv)
@@ -26,15 +28,18 @@ int main(int argc, char ** argv)
 				return 0;
 			}
 			xmlin = fid;
-			int retour = xmlparse();
+			Document * document;
+			int retour = xmlparse(&document);
 			if (!retour)
 			{
 			  cout<<"Entrée standard reconnue"<<endl;
+			  document->display();
 			}
 			else
 			{
 			  cout<<"Entrée standard non reconnue"<<endl;
 			}
+			delete document;
 		}
 		else if(strcmp(argv[1],"-v") == 0)
 		{
