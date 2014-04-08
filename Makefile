@@ -5,7 +5,7 @@ commun: *.l *.y *.cpp *.h
 	g++ -g -o ./Tests/xmltool main.cpp xml.tab.c lex.xml.c model/attribute.cpp model/cdSect.cpp model/comment.cpp model/docTypeDecl.cpp model/document.cpp model/donnees.cpp model/element.cpp model/pi.cpp model/prolog.cpp
 
 clean:
-	-rm -rf xml.tab.c lex.xml.c xml.tab.h xml.output xmltool.dSYM ./Tests/results.csv ./Tests/xmltool ./Tests/xmltool.dSYM commun
+	-rm -rf xml.tab.c lex.xml.c xml.tab.h xml.output xmltool.dSYM ./Tests/results.csv ./Tests/xmltool ./Tests/xmltool.exe ./Tests/xmltool.dSYM commun
 
 test:
 	cd Tests; ./mktest.sh
