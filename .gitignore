@@ -3,5 +3,12 @@
 *.exe
 xmltool
 
-#Tests files
+#Tests result files
 *.csv
+
+#Generated files (bison etc)
+xml.output
+xml.tab.h
+xml.tab.c
+lex.xml.c
+xmltool.dSYM
