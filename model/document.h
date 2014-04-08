@@ -12,7 +12,7 @@ using namespace std;
 
 class Document
 {
-	private :
+	public : //temporaire (sorana)
 		Prolog * prolog;
 		Element * element;
 		vector<Misc *> * miscs;
