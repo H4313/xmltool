@@ -16,46 +16,66 @@ int main(int argc, char ** argv)
 #ifdef XMLDEBUG
 	xmldebug = 1;
 #endif
-	if(strcmp(argv[1],"-p") == 0)
+	if(argc >= 2)
 	{
-		if(argc == 3)
-		{	
-			FILE * fid;
-			fid = fopen(argv[2],"r");
-			if (!fid)
-			{
-				cerr<<"Unable to open "<<argv[2]<<endl;
-				return 1;
-			}
-			xmlin = fid;
-			Document * document;
-			int retour = xmlparse(&document);
-			if (!retour)
-			{
-			  document->display();
-			  delete document;
-			  return 0;
+		if(strcmp(argv[1],"-p") == 0)
+		{
+			if(argc == 3)
+			{	
+				FILE * fid;
+				fid = fopen(argv[2],"r");
+				if (!fid)
+				{
+					cerr<<"Unable to open "<<argv[2]<<endl;
+					return 1;
+				}
+				xmlin = fid;
+				Document * document;
+				int retour = xmlparse(&document);
+				if (!retour)
+				{
+				  document->display();
+				  delete document;
+				  return 0;
+				}
+				else
+				{
+					cerr<<"No root markup"<<endl;
+					return 1;
+				}
 			}
 			else
 			{
-				cerr<<"No root markup"<<endl;
-				return 1;
+				cout<<"La commande n'a pas été reconnue"<<endl;
 			}
+		}
+		else if(strcmp(argv[1],"-v") == 0)
+		{
+		}
+		else if(strcmp(argv[1],"-t") == 0)
+		{
+		}
+		else if(strcmp(argv[1],"-h") == 0)
+		{
+			cerr<<"Available commands are:"<<endl;
+			cerr<<"../xmltool -p file.xml : parse and display the xml file"<<endl;
+			cerr<<"../xmltool -v file.xml file.xsd : parse both xml and xsd files and display the validation result"<<endl;
+			cerr<<"../xmltool -t file.xml file.xsl : parse both xml and xsl files and display de transformation result of file.xml by the stylesheet file.xsl"<<endl;
+			cerr<<"../xmltool -h : displays this help"<<endl;
 		}
 		else
 		{
 			cout<<"La commande n'a pas été reconnue"<<endl;
 		}
 	}
-	else if(strcmp(argv[1],"-v") == 0)
-	{
-	}
-	else if(strcmp(argv[1],"-t") == 0)
-	{
-	}
 	else
 	{
-		cout<<"La commande n'a pas été reconnue"<<endl;
+		cerr<<"No argument given"<<endl;
+		cerr<<"Available commands are:"<<endl;
+		cerr<<"../xmltool -p file.xml : parse and display the xml file"<<endl;
+		cerr<<"../xmltool -v file.xml file.xsd : parse both xml and xsd files and display the validation result"<<endl;
+		cerr<<"../xmltool -t file.xml file.xsl : parse both xml and xsl files and display de transformation result of file.xml by the stylesheet file.xsl"<<endl;
+		cerr<<"../xmltool -h : displays this help"<<endl;
 	}
-	return 0;
+	return 1;
 }
