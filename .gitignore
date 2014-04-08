@@ -1,0 +1,7 @@
+#Compilation/compiled files
+*.o
+*.exe
+xmltool
+
+#Tests files
+*.csv
