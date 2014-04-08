@@ -1,4 +1,35 @@
 Test ID;Return code validation;Out result;StdErr result;File creation result;Global result
-TestCLIHelp;Echec;Ok;Echec;Non testé;Echec
-TestCLINoArgument;Echec;Ok;Echec;Non testé;Echec
-TestCLIParseNoFile;Echec;Ok;Echec;Non testé;Echec
+TestCLIHelp;Ok;Ok;Ok;Non testé;Ok
+TestCLINoArgument;Ok;Ok;Ok;Non testé;Ok
+TestCLIParseNoFile;Ok;Ok;Ok;Non testé;Ok
+TestCLITransformNoFile;Ok;Ok;Echec;Non testé;Echec
+TestCLITransformOneFile;Ok;Ok;Echec;Non testé;Echec
+TestCLIValidationNoFile;Ok;Ok;Echec;Non testé;Echec
+TestCLIValidationOneFile;Ok;Ok;Echec;Non testé;Echec
+TestParsingBadMarkup1;Echec;Echec;Echec;Non testé;Echec
+TestParsingBadMarkup2;Echec;Echec;Echec;Non testé;Echec
+TestParsingBadMarkup3;Echec;Echec;Echec;Non testé;Echec
+TestParsingBadMarkup4;Echec;Echec;Echec;Non testé;Echec
+TestParsingCannotOpen;Ok;Ok;Ok;Non testé;Ok
+TestParsingLexicalError;Ok;Ok;Ok;Non testé;Ok
+TestParsingMissingMarkup;Ok;Ok;Echec;Non testé;Echec
+TestParsingSimple1;Ok;Ok;Non testé;Non testé;Ok
+TestParsingSimple2;Ok;Echec;Non testé;Non testé;Echec
+TestParsingSimple3;Ok;Echec;Non testé;Non testé;Echec
+TestParsingSimple4;Ok;Echec;Non testé;Non testé;Echec
+TestParsingSimple5;Ok;Echec;Non testé;Non testé;Echec
+TestParsingSyntaxError;Ok;Ok;Ok;Non testé;Ok
+TestTransformApplyTemplates1;Echec;Echec;Non testé;Non testé;Echec
+TestTransformApplyTemplates2;Echec;Echec;Non testé;Non testé;Echec
+TestTransformCannotOpen1;Ok;Ok;Echec;Non testé;Echec
+TestTransformCannotOpen2;Ok;Ok;Echec;Non testé;Echec
+TestTransformForeach;Echec;Echec;Non testé;Non testé;Echec
+TestValidationCannotOpen1;Ok;Ok;Echec;Non testé;Echec
+TestValidationCannotOpen2;Ok;Ok;Echec;Non testé;Echec
+TestValidationChoiceBad;Echec;Echec;Non testé;Non testé;Echec
+TestValidationChoiceGood;Echec;Echec;Non testé;Non testé;Echec
+TestValidationMaxOccursBad;Echec;Echec;Non testé;Non testé;Echec
+TestValidationMaxOccursGood;Echec;Echec;Non testé;Non testé;Echec
+TestValidationSequenceBadOrder;Echec;Echec;Non testé;Non testé;Echec
+TestValidationSequenceGood;Echec;Echec;Non testé;Non testé;Echec
+TestValidationSequenceMissingItem;Echec;Echec;Non testé;Non testé;Echec

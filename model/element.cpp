@@ -36,7 +36,7 @@ void Element::display()
 {
 	if(name)
 	{
-		cout<<"<"<<*name;
+		cout<<endl<<"<"<<*name;
 		if(attributes)
 		{
 			for(int i = 0 ; i < attributes->size() ; i++)
