@@ -44,7 +44,7 @@ Grammaire
    28 pi: INFSPECIAL NOM attributestar SUPSPECIAL
 
 
-Terminaux, suivis des règles où ils apparaissent
+Terminaux, suivis des rÃ¨gles oÃ¹ ils apparaissent
 
 $end (0) 0
 error (256)
@@ -64,408 +64,408 @@ NOM (270) 5 6 7 12 13 14 15 18 19 28
 CDATAEND (271) 27
 
 
-Non-terminaux, suivis des règles où ils apparaissent
+Non-terminaux, suivis des rÃ¨gles oÃ¹ ils apparaissent
 
 $accept (17)
-    à gauche: 0
+    Ã  gauche: 0
 document (18)
-    à gauche: 1, à droite: 0
+    Ã  gauche: 1, Ã  droite: 0
 prolog (19)
-    à gauche: 2, à droite: 1
+    Ã  gauche: 2, Ã  droite: 1
 prologend (20)
-    à gauche: 3 4, à droite: 2
+    Ã  gauche: 3 4, Ã  droite: 2
 doctypedecl (21)
-    à gauche: 5 6 7, à droite: 3
+    Ã  gauche: 5 6 7, Ã  droite: 3
 miscstar (22)
-    à gauche: 8 9, à droite: 1 2 3 8
+    Ã  gauche: 8 9, Ã  droite: 1 2 3 8
 misc (23)
-    à gauche: 10 11, à droite: 8
+    Ã  gauche: 10 11, Ã  droite: 8
 element (24)
-    à gauche: 12 13 14 15, à droite: 1 22
+    Ã  gauche: 12 13 14 15, Ã  droite: 1 22
 attributestar (25)
-    à gauche: 16 17, à droite: 12 13 14 15 16 28
+    Ã  gauche: 16 17, Ã  droite: 12 13 14 15 16 28
 attribute (26)
-    à gauche: 18 19, à droite: 16
+    Ã  gauche: 18 19, Ã  droite: 16
 content (27)
-    à gauche: 20 21, à droite: 13 15 20
+    Ã  gauche: 20 21, Ã  droite: 13 15 20
 item (28)
-    à gauche: 22 23 24 25 26, à droite: 20
+    Ã  gauche: 22 23 24 25 26, Ã  droite: 20
 cdsect (29)
-    à gauche: 27, à droite: 23
+    Ã  gauche: 27, Ã  droite: 23
 pi (30)
-    à gauche: 28, à droite: 11 24
+    Ã  gauche: 28, Ã  droite: 11 24
 
 
-état 0
+Ã‰tat 0
 
     0 $accept: . document $end
 
-    $défaut  réduction par utilisation de la règle 9 (miscstar)
+    $dÃ©faut  rÃ©duction par utilisation de la rÃ¨gle 9 (miscstar)
 
-    document  aller à l'état 1
-    prolog    aller à l'état 2
-    miscstar  aller à l'état 3
+    document  aller Ã  l'Ã©tat 1
+    prolog    aller Ã  l'Ã©tat 2
+    miscstar  aller Ã  l'Ã©tat 3
 
 
-état 1
+Ã‰tat 1
 
     0 $accept: document . $end
 
-    $end  décalage et aller à l'état 4
+    $end  dÃ©calage et aller Ã  l'Ã©tat 4
 
 
-état 2
+Ã‰tat 2
 
     1 document: prolog . element miscstar
 
-    INF  décalage et aller à l'état 5
+    INF  dÃ©calage et aller Ã  l'Ã©tat 5
 
-    element  aller à l'état 6
+    element  aller Ã  l'Ã©tat 6
 
 
-état 3
+Ã‰tat 3
 
     2 prolog: miscstar . prologend
     8 miscstar: miscstar . misc
 
-    DOCTYPE     décalage et aller à l'état 7
-    INFSPECIAL  décalage et aller à l'état 8
-    COMMENT     décalage et aller à l'état 9
+    DOCTYPE     dÃ©calage et aller Ã  l'Ã©tat 7
+    INFSPECIAL  dÃ©calage et aller Ã  l'Ã©tat 8
+    COMMENT     dÃ©calage et aller Ã  l'Ã©tat 9
 
-    $défaut  réduction par utilisation de la règle 4 (prologend)
+    $dÃ©faut  rÃ©duction par utilisation de la rÃ¨gle 4 (prologend)
 
-    prologend    aller à l'état 10
-    doctypedecl  aller à l'état 11
-    misc         aller à l'état 12
-    pi           aller à l'état 13
+    prologend    aller Ã  l'Ã©tat 10
+    doctypedecl  aller Ã  l'Ã©tat 11
+    misc         aller Ã  l'Ã©tat 12
+    pi           aller Ã  l'Ã©tat 13
 
 
-état 4
+Ã‰tat 4
 
     0 $accept: document $end .
 
-    $défaut  accepter
+    $dÃ©faut  accepter
 
 
-état 5
+Ã‰tat 5
 
    12 element: INF . NOM COLON NOM attributestar SLASH SUP
    13        | INF . NOM COLON NOM attributestar SUP content INF SLASH NOM COLON NOM SUP
    14        | INF . NOM attributestar SLASH SUP
    15        | INF . NOM attributestar SUP content INF SLASH NOM SUP
 
-    NOM  décalage et aller à l'état 14
+    NOM  dÃ©calage et aller Ã  l'Ã©tat 14
 
 
-état 6
+Ã‰tat 6
 
     1 document: prolog element . miscstar
 
-    $défaut  réduction par utilisation de la règle 9 (miscstar)
+    $dÃ©faut  rÃ©duction par utilisation de la rÃ¨gle 9 (miscstar)
 
-    miscstar  aller à l'état 15
+    miscstar  aller Ã  l'Ã©tat 15
 
 
-état 7
+Ã‰tat 7
 
     5 doctypedecl: DOCTYPE . NOM SUP
     6            | DOCTYPE . NOM NOM SUP
     7            | DOCTYPE . NOM NOM VALEUR SUP
 
-    NOM  décalage et aller à l'état 16
+    NOM  dÃ©calage et aller Ã  l'Ã©tat 16
 
 
-état 8
+Ã‰tat 8
 
    28 pi: INFSPECIAL . NOM attributestar SUPSPECIAL
 
-    NOM  décalage et aller à l'état 17
+    NOM  dÃ©calage et aller Ã  l'Ã©tat 17
 
 
-état 9
+Ã‰tat 9
 
    10 misc: COMMENT .
 
-    $défaut  réduction par utilisation de la règle 10 (misc)
+    $dÃ©faut  rÃ©duction par utilisation de la rÃ¨gle 10 (misc)
 
 
-état 10
+Ã‰tat 10
 
     2 prolog: miscstar prologend .
 
-    $défaut  réduction par utilisation de la règle 2 (prolog)
+    $dÃ©faut  rÃ©duction par utilisation de la rÃ¨gle 2 (prolog)
 
 
-état 11
+Ã‰tat 11
 
     3 prologend: doctypedecl . miscstar
 
-    $défaut  réduction par utilisation de la règle 9 (miscstar)
+    $dÃ©faut  rÃ©duction par utilisation de la rÃ¨gle 9 (miscstar)
 
-    miscstar  aller à l'état 18
+    miscstar  aller Ã  l'Ã©tat 18
 
 
-état 12
+Ã‰tat 12
 
     8 miscstar: miscstar misc .
 
-    $défaut  réduction par utilisation de la règle 8 (miscstar)
+    $dÃ©faut  rÃ©duction par utilisation de la rÃ¨gle 8 (miscstar)
 
 
-état 13
+Ã‰tat 13
 
    11 misc: pi .
 
-    $défaut  réduction par utilisation de la règle 11 (misc)
+    $dÃ©faut  rÃ©duction par utilisation de la rÃ¨gle 11 (misc)
 
 
-état 14
+Ã‰tat 14
 
    12 element: INF NOM . COLON NOM attributestar SLASH SUP
    13        | INF NOM . COLON NOM attributestar SUP content INF SLASH NOM COLON NOM SUP
    14        | INF NOM . attributestar SLASH SUP
    15        | INF NOM . attributestar SUP content INF SLASH NOM SUP
 
-    COLON  décalage et aller à l'état 19
+    COLON  dÃ©calage et aller Ã  l'Ã©tat 19
 
-    $défaut  réduction par utilisation de la règle 17 (attributestar)
+    $dÃ©faut  rÃ©duction par utilisation de la rÃ¨gle 17 (attributestar)
 
-    attributestar  aller à l'état 20
+    attributestar  aller Ã  l'Ã©tat 20
 
 
-état 15
+Ã‰tat 15
 
     1 document: prolog element miscstar .
     8 miscstar: miscstar . misc
 
-    INFSPECIAL  décalage et aller à l'état 8
-    COMMENT     décalage et aller à l'état 9
+    INFSPECIAL  dÃ©calage et aller Ã  l'Ã©tat 8
+    COMMENT     dÃ©calage et aller Ã  l'Ã©tat 9
 
-    $défaut  réduction par utilisation de la règle 1 (document)
+    $dÃ©faut  rÃ©duction par utilisation de la rÃ¨gle 1 (document)
 
-    misc  aller à l'état 12
-    pi    aller à l'état 13
+    misc  aller Ã  l'Ã©tat 12
+    pi    aller Ã  l'Ã©tat 13
 
 
-état 16
+Ã‰tat 16
 
     5 doctypedecl: DOCTYPE NOM . SUP
     6            | DOCTYPE NOM . NOM SUP
     7            | DOCTYPE NOM . NOM VALEUR SUP
 
-    SUP  décalage et aller à l'état 21
-    NOM  décalage et aller à l'état 22
+    SUP  dÃ©calage et aller Ã  l'Ã©tat 21
+    NOM  dÃ©calage et aller Ã  l'Ã©tat 22
 
 
-état 17
+Ã‰tat 17
 
    28 pi: INFSPECIAL NOM . attributestar SUPSPECIAL
 
-    $défaut  réduction par utilisation de la règle 17 (attributestar)
+    $dÃ©faut  rÃ©duction par utilisation de la rÃ¨gle 17 (attributestar)
 
-    attributestar  aller à l'état 23
+    attributestar  aller Ã  l'Ã©tat 23
 
 
-état 18
+Ã‰tat 18
 
     3 prologend: doctypedecl miscstar .
     8 miscstar: miscstar . misc
 
-    INFSPECIAL  décalage et aller à l'état 8
-    COMMENT     décalage et aller à l'état 9
+    INFSPECIAL  dÃ©calage et aller Ã  l'Ã©tat 8
+    COMMENT     dÃ©calage et aller Ã  l'Ã©tat 9
 
-    $défaut  réduction par utilisation de la règle 3 (prologend)
+    $dÃ©faut  rÃ©duction par utilisation de la rÃ¨gle 3 (prologend)
 
-    misc  aller à l'état 12
-    pi    aller à l'état 13
+    misc  aller Ã  l'Ã©tat 12
+    pi    aller Ã  l'Ã©tat 13
 
 
-état 19
+Ã‰tat 19
 
    12 element: INF NOM COLON . NOM attributestar SLASH SUP
    13        | INF NOM COLON . NOM attributestar SUP content INF SLASH NOM COLON NOM SUP
 
-    NOM  décalage et aller à l'état 24
+    NOM  dÃ©calage et aller Ã  l'Ã©tat 24
 
 
-état 20
+Ã‰tat 20
 
    14 element: INF NOM attributestar . SLASH SUP
    15        | INF NOM attributestar . SUP content INF SLASH NOM SUP
    16 attributestar: attributestar . attribute
 
-    SLASH  décalage et aller à l'état 25
-    SUP    décalage et aller à l'état 26
-    NOM    décalage et aller à l'état 27
+    SLASH  dÃ©calage et aller Ã  l'Ã©tat 25
+    SUP    dÃ©calage et aller Ã  l'Ã©tat 26
+    NOM    dÃ©calage et aller Ã  l'Ã©tat 27
 
-    attribute  aller à l'état 28
+    attribute  aller Ã  l'Ã©tat 28
 
 
-état 21
+Ã‰tat 21
 
     5 doctypedecl: DOCTYPE NOM SUP .
 
-    $défaut  réduction par utilisation de la règle 5 (doctypedecl)
+    $dÃ©faut  rÃ©duction par utilisation de la rÃ¨gle 5 (doctypedecl)
 
 
-état 22
+Ã‰tat 22
 
     6 doctypedecl: DOCTYPE NOM NOM . SUP
     7            | DOCTYPE NOM NOM . VALEUR SUP
 
-    SUP     décalage et aller à l'état 29
-    VALEUR  décalage et aller à l'état 30
+    SUP     dÃ©calage et aller Ã  l'Ã©tat 29
+    VALEUR  dÃ©calage et aller Ã  l'Ã©tat 30
 
 
-état 23
+Ã‰tat 23
 
    16 attributestar: attributestar . attribute
    28 pi: INFSPECIAL NOM attributestar . SUPSPECIAL
 
-    SUPSPECIAL  décalage et aller à l'état 31
-    NOM         décalage et aller à l'état 27
+    SUPSPECIAL  dÃ©calage et aller Ã  l'Ã©tat 31
+    NOM         dÃ©calage et aller Ã  l'Ã©tat 27
 
-    attribute  aller à l'état 28
+    attribute  aller Ã  l'Ã©tat 28
 
 
-état 24
+Ã‰tat 24
 
    12 element: INF NOM COLON NOM . attributestar SLASH SUP
    13        | INF NOM COLON NOM . attributestar SUP content INF SLASH NOM COLON NOM SUP
 
-    $défaut  réduction par utilisation de la règle 17 (attributestar)
+    $dÃ©faut  rÃ©duction par utilisation de la rÃ¨gle 17 (attributestar)
 
-    attributestar  aller à l'état 32
+    attributestar  aller Ã  l'Ã©tat 32
 
 
-état 25
+Ã‰tat 25
 
    14 element: INF NOM attributestar SLASH . SUP
 
-    SUP  décalage et aller à l'état 33
+    SUP  dÃ©calage et aller Ã  l'Ã©tat 33
 
 
-état 26
+Ã‰tat 26
 
    15 element: INF NOM attributestar SUP . content INF SLASH NOM SUP
 
-    $défaut  réduction par utilisation de la règle 21 (content)
+    $dÃ©faut  rÃ©duction par utilisation de la rÃ¨gle 21 (content)
 
-    content  aller à l'état 34
+    content  aller Ã  l'Ã©tat 34
 
 
-état 27
+Ã‰tat 27
 
    18 attribute: NOM . EGAL VALEUR
    19          | NOM . COLON NOM EGAL VALEUR
 
-    EGAL   décalage et aller à l'état 35
-    COLON  décalage et aller à l'état 36
+    EGAL   dÃ©calage et aller Ã  l'Ã©tat 35
+    COLON  dÃ©calage et aller Ã  l'Ã©tat 36
 
 
-état 28
+Ã‰tat 28
 
    16 attributestar: attributestar attribute .
 
-    $défaut  réduction par utilisation de la règle 16 (attributestar)
+    $dÃ©faut  rÃ©duction par utilisation de la rÃ¨gle 16 (attributestar)
 
 
-état 29
+Ã‰tat 29
 
     6 doctypedecl: DOCTYPE NOM NOM SUP .
 
-    $défaut  réduction par utilisation de la règle 6 (doctypedecl)
+    $dÃ©faut  rÃ©duction par utilisation de la rÃ¨gle 6 (doctypedecl)
 
 
-état 30
+Ã‰tat 30
 
     7 doctypedecl: DOCTYPE NOM NOM VALEUR . SUP
 
-    SUP  décalage et aller à l'état 37
+    SUP  dÃ©calage et aller Ã  l'Ã©tat 37
 
 
-état 31
+Ã‰tat 31
 
    28 pi: INFSPECIAL NOM attributestar SUPSPECIAL .
 
-    $défaut  réduction par utilisation de la règle 28 (pi)
+    $dÃ©faut  rÃ©duction par utilisation de la rÃ¨gle 28 (pi)
 
 
-état 32
+Ã‰tat 32
 
    12 element: INF NOM COLON NOM attributestar . SLASH SUP
    13        | INF NOM COLON NOM attributestar . SUP content INF SLASH NOM COLON NOM SUP
    16 attributestar: attributestar . attribute
 
-    SLASH  décalage et aller à l'état 38
-    SUP    décalage et aller à l'état 39
-    NOM    décalage et aller à l'état 27
+    SLASH  dÃ©calage et aller Ã  l'Ã©tat 38
+    SUP    dÃ©calage et aller Ã  l'Ã©tat 39
+    NOM    dÃ©calage et aller Ã  l'Ã©tat 27
 
-    attribute  aller à l'état 28
+    attribute  aller Ã  l'Ã©tat 28
 
 
-état 33
+Ã‰tat 33
 
    14 element: INF NOM attributestar SLASH SUP .
 
-    $défaut  réduction par utilisation de la règle 14 (element)
+    $dÃ©faut  rÃ©duction par utilisation de la rÃ¨gle 14 (element)
 
 
-état 34
+Ã‰tat 34
 
    15 element: INF NOM attributestar SUP content . INF SLASH NOM SUP
    20 content: content . item
 
-    INFSPECIAL  décalage et aller à l'état 8
-    INF         décalage et aller à l'état 40
-    CDATABEGIN  décalage et aller à l'état 41
-    DONNEES     décalage et aller à l'état 42
-    COMMENT     décalage et aller à l'état 43
+    INFSPECIAL  dÃ©calage et aller Ã  l'Ã©tat 8
+    INF         dÃ©calage et aller Ã  l'Ã©tat 40
+    CDATABEGIN  dÃ©calage et aller Ã  l'Ã©tat 41
+    DONNEES     dÃ©calage et aller Ã  l'Ã©tat 42
+    COMMENT     dÃ©calage et aller Ã  l'Ã©tat 43
 
-    element  aller à l'état 44
-    item     aller à l'état 45
-    cdsect   aller à l'état 46
-    pi       aller à l'état 47
+    element  aller Ã  l'Ã©tat 44
+    item     aller Ã  l'Ã©tat 45
+    cdsect   aller Ã  l'Ã©tat 46
+    pi       aller Ã  l'Ã©tat 47
 
 
-état 35
+Ã‰tat 35
 
    18 attribute: NOM EGAL . VALEUR
 
-    VALEUR  décalage et aller à l'état 48
+    VALEUR  dÃ©calage et aller Ã  l'Ã©tat 48
 
 
-état 36
+Ã‰tat 36
 
    19 attribute: NOM COLON . NOM EGAL VALEUR
 
-    NOM  décalage et aller à l'état 49
+    NOM  dÃ©calage et aller Ã  l'Ã©tat 49
 
 
-état 37
+Ã‰tat 37
 
     7 doctypedecl: DOCTYPE NOM NOM VALEUR SUP .
 
-    $défaut  réduction par utilisation de la règle 7 (doctypedecl)
+    $dÃ©faut  rÃ©duction par utilisation de la rÃ¨gle 7 (doctypedecl)
 
 
-état 38
+Ã‰tat 38
 
    12 element: INF NOM COLON NOM attributestar SLASH . SUP
 
-    SUP  décalage et aller à l'état 50
+    SUP  dÃ©calage et aller Ã  l'Ã©tat 50
 
 
-état 39
+Ã‰tat 39
 
    13 element: INF NOM COLON NOM attributestar SUP . content INF SLASH NOM COLON NOM SUP
 
-    $défaut  réduction par utilisation de la règle 21 (content)
+    $dÃ©faut  rÃ©duction par utilisation de la rÃ¨gle 21 (content)
 
-    content  aller à l'état 51
+    content  aller Ã  l'Ã©tat 51
 
 
-état 40
+Ã‰tat 40
 
    12 element: INF . NOM COLON NOM attributestar SLASH SUP
    13        | INF . NOM COLON NOM attributestar SUP content INF SLASH NOM COLON NOM SUP
@@ -473,119 +473,119 @@ pi (30)
    15        | INF . NOM attributestar SUP content INF SLASH NOM SUP
    15        | INF NOM attributestar SUP content INF . SLASH NOM SUP
 
-    SLASH  décalage et aller à l'état 52
-    NOM    décalage et aller à l'état 14
+    SLASH  dÃ©calage et aller Ã  l'Ã©tat 52
+    NOM    dÃ©calage et aller Ã  l'Ã©tat 14
 
 
-état 41
+Ã‰tat 41
 
    27 cdsect: CDATABEGIN . CDATAEND
 
-    CDATAEND  décalage et aller à l'état 53
+    CDATAEND  dÃ©calage et aller Ã  l'Ã©tat 53
 
 
-état 42
+Ã‰tat 42
 
    26 item: DONNEES .
 
-    $défaut  réduction par utilisation de la règle 26 (item)
+    $dÃ©faut  rÃ©duction par utilisation de la rÃ¨gle 26 (item)
 
 
-état 43
+Ã‰tat 43
 
    25 item: COMMENT .
 
-    $défaut  réduction par utilisation de la règle 25 (item)
+    $dÃ©faut  rÃ©duction par utilisation de la rÃ¨gle 25 (item)
 
 
-état 44
+Ã‰tat 44
 
    22 item: element .
 
-    $défaut  réduction par utilisation de la règle 22 (item)
+    $dÃ©faut  rÃ©duction par utilisation de la rÃ¨gle 22 (item)
 
 
-état 45
+Ã‰tat 45
 
    20 content: content item .
 
-    $défaut  réduction par utilisation de la règle 20 (content)
+    $dÃ©faut  rÃ©duction par utilisation de la rÃ¨gle 20 (content)
 
 
-état 46
+Ã‰tat 46
 
    23 item: cdsect .
 
-    $défaut  réduction par utilisation de la règle 23 (item)
+    $dÃ©faut  rÃ©duction par utilisation de la rÃ¨gle 23 (item)
 
 
-état 47
+Ã‰tat 47
 
    24 item: pi .
 
-    $défaut  réduction par utilisation de la règle 24 (item)
+    $dÃ©faut  rÃ©duction par utilisation de la rÃ¨gle 24 (item)
 
 
-état 48
+Ã‰tat 48
 
    18 attribute: NOM EGAL VALEUR .
 
-    $défaut  réduction par utilisation de la règle 18 (attribute)
+    $dÃ©faut  rÃ©duction par utilisation de la rÃ¨gle 18 (attribute)
 
 
-état 49
+Ã‰tat 49
 
    19 attribute: NOM COLON NOM . EGAL VALEUR
 
-    EGAL  décalage et aller à l'état 54
+    EGAL  dÃ©calage et aller Ã  l'Ã©tat 54
 
 
-état 50
+Ã‰tat 50
 
    12 element: INF NOM COLON NOM attributestar SLASH SUP .
 
-    $défaut  réduction par utilisation de la règle 12 (element)
+    $dÃ©faut  rÃ©duction par utilisation de la rÃ¨gle 12 (element)
 
 
-état 51
+Ã‰tat 51
 
    13 element: INF NOM COLON NOM attributestar SUP content . INF SLASH NOM COLON NOM SUP
    20 content: content . item
 
-    INFSPECIAL  décalage et aller à l'état 8
-    INF         décalage et aller à l'état 55
-    CDATABEGIN  décalage et aller à l'état 41
-    DONNEES     décalage et aller à l'état 42
-    COMMENT     décalage et aller à l'état 43
+    INFSPECIAL  dÃ©calage et aller Ã  l'Ã©tat 8
+    INF         dÃ©calage et aller Ã  l'Ã©tat 55
+    CDATABEGIN  dÃ©calage et aller Ã  l'Ã©tat 41
+    DONNEES     dÃ©calage et aller Ã  l'Ã©tat 42
+    COMMENT     dÃ©calage et aller Ã  l'Ã©tat 43
 
-    element  aller à l'état 44
-    item     aller à l'état 45
-    cdsect   aller à l'état 46
-    pi       aller à l'état 47
+    element  aller Ã  l'Ã©tat 44
+    item     aller Ã  l'Ã©tat 45
+    cdsect   aller Ã  l'Ã©tat 46
+    pi       aller Ã  l'Ã©tat 47
 
 
-état 52
+Ã‰tat 52
 
    15 element: INF NOM attributestar SUP content INF SLASH . NOM SUP
 
-    NOM  décalage et aller à l'état 56
+    NOM  dÃ©calage et aller Ã  l'Ã©tat 56
 
 
-état 53
+Ã‰tat 53
 
    27 cdsect: CDATABEGIN CDATAEND .
 
-    $défaut  réduction par utilisation de la règle 27 (cdsect)
+    $dÃ©faut  rÃ©duction par utilisation de la rÃ¨gle 27 (cdsect)
 
 
-état 54
+Ã‰tat 54
 
    19 attribute: NOM COLON NOM EGAL . VALEUR
 
-    VALEUR  décalage et aller à l'état 57
+    VALEUR  dÃ©calage et aller Ã  l'Ã©tat 57
 
 
-état 55
+Ã‰tat 55
 
    12 element: INF . NOM COLON NOM attributestar SLASH SUP
    13        | INF . NOM COLON NOM attributestar SUP content INF SLASH NOM COLON NOM SUP
@@ -593,61 +593,61 @@ pi (30)
    14        | INF . NOM attributestar SLASH SUP
    15        | INF . NOM attributestar SUP content INF SLASH NOM SUP
 
-    SLASH  décalage et aller à l'état 58
-    NOM    décalage et aller à l'état 14
+    SLASH  dÃ©calage et aller Ã  l'Ã©tat 58
+    NOM    dÃ©calage et aller Ã  l'Ã©tat 14
 
 
-état 56
+Ã‰tat 56
 
    15 element: INF NOM attributestar SUP content INF SLASH NOM . SUP
 
-    SUP  décalage et aller à l'état 59
+    SUP  dÃ©calage et aller Ã  l'Ã©tat 59
 
 
-état 57
+Ã‰tat 57
 
    19 attribute: NOM COLON NOM EGAL VALEUR .
 
-    $défaut  réduction par utilisation de la règle 19 (attribute)
+    $dÃ©faut  rÃ©duction par utilisation de la rÃ¨gle 19 (attribute)
 
 
-état 58
+Ã‰tat 58
 
    13 element: INF NOM COLON NOM attributestar SUP content INF SLASH . NOM COLON NOM SUP
 
-    NOM  décalage et aller à l'état 60
+    NOM  dÃ©calage et aller Ã  l'Ã©tat 60
 
 
-état 59
+Ã‰tat 59
 
    15 element: INF NOM attributestar SUP content INF SLASH NOM SUP .
 
-    $défaut  réduction par utilisation de la règle 15 (element)
+    $dÃ©faut  rÃ©duction par utilisation de la rÃ¨gle 15 (element)
 
 
-état 60
+Ã‰tat 60
 
    13 element: INF NOM COLON NOM attributestar SUP content INF SLASH NOM . COLON NOM SUP
 
-    COLON  décalage et aller à l'état 61
+    COLON  dÃ©calage et aller Ã  l'Ã©tat 61
 
 
-état 61
+Ã‰tat 61
 
    13 element: INF NOM COLON NOM attributestar SUP content INF SLASH NOM COLON . NOM SUP
 
-    NOM  décalage et aller à l'état 62
+    NOM  dÃ©calage et aller Ã  l'Ã©tat 62
 
 
-état 62
+Ã‰tat 62
 
    13 element: INF NOM COLON NOM attributestar SUP content INF SLASH NOM COLON NOM . SUP
 
-    SUP  décalage et aller à l'état 63
+    SUP  dÃ©calage et aller Ã  l'Ã©tat 63
 
 
-état 63
+Ã‰tat 63
 
    13 element: INF NOM COLON NOM attributestar SUP content INF SLASH NOM COLON NOM SUP .
 
-    $défaut  réduction par utilisation de la règle 13 (element)
+    $dÃ©faut  rÃ©duction par utilisation de la rÃ¨gle 13 (element)

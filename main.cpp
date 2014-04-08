@@ -23,7 +23,7 @@ int main(int argc, char ** argv)
 		{
 			if(argc == 3)
 			{	
-				FILE * fid = open(argv[1],argv[2]);
+				FILE * fid = open("-p",argv[2]);
 				if (!fid) return 1;
 				xmlin = fid;
 				Document * document;
@@ -49,14 +49,14 @@ int main(int argc, char ** argv)
 		{
 			if(argc == 4)
 			{
-				FILE * fid = open(argv[1],argv[2]);
+				FILE * fid = open("-v",argv[2]);
 				if (!fid) return 1;
 				xmlin = fid;
 				Document * document;
 				int retour = xmlparse(&document);
 				if (!retour)
 				{
-					FILE * fid2 = open(argv[1],argv[3]);
+					FILE * fid2 = open("-v",argv[3]);
 					if (!fid2) return 1;
 					xmlin = fid2;
 					Document * document2;
@@ -92,6 +92,49 @@ int main(int argc, char ** argv)
 		}
 		else if(strcmp(argv[1],"-t") == 0)
 		{
+						if(argc == 4)
+			{
+				FILE * fid = open("-t",argv[2]);
+				if (!fid) return 1;
+				xmlin = fid;
+				Document * document;
+				int retour = xmlparse(&document);
+				if (!retour)
+				{
+					FILE * fid2 = open("-t",argv[3]);
+					if (!fid2) return 1;
+					xmlin = fid2;
+					Document * document2;
+					int retourXsd = xmlparse(&document2);
+					if (!retourXsd)
+					{
+					  //document->display();
+					  //document2->display();
+					////
+						// Validation XSD
+					////
+
+					  delete document;
+					  delete document2;
+					  return 0;
+					}
+					else
+					{
+						cerr<<"No root markup"<<endl;
+						return 1;
+					}
+				}
+				else
+				{
+					cerr<<"No root markup"<<endl;
+					return 1;
+				}
+			}
+			else
+			{
+				cerr<<"You must provide an argument to the command -t"<<endl;
+			}
+			
 		}
 		else if(strcmp(argv[1],"-h") == 0)
 		{

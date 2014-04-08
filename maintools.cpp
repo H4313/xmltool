@@ -17,7 +17,7 @@ FILE * open(char* param, char* fileName){
 	FILE * fid = fopen(fileName,"r");
 	if (!fid)
 	{
-		if (strcmp(param,"-v")==0){
+		if (strcmp(param,"-v")==0 || strcmp(param,"-t")==0){
 			cerr<<"Unable to open file "<<fileName<<endl;
 		}
 		else{
