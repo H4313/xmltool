@@ -32,13 +32,14 @@ int main(int argc, char ** argv)
 			int retour = xmlparse(&document);
 			if (!retour)
 			{
-			  cout<<"Entrée standard reconnue"<<endl;
 			  document->display();
 			  delete document;
+			  return 0;
 			}
 			else
 			{
-			  cout<<"Entrée standard non reconnue"<<endl;
+				cerr<<"No root markup"<<endl;
+				return 1;
 			}
 		}
 		else if(strcmp(argv[1],"-v") == 0)

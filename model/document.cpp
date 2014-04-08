@@ -27,7 +27,6 @@ Document::~Document()
 
 void Document::display()
 {
-	cout<<"--- AFFICHAGE DU DOCUMENT XML PARSE ---"<<endl<<endl;
 	if(prolog && element)
 	{
 		prolog->display();
