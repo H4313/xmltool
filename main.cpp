@@ -46,7 +46,7 @@ int main(int argc, char ** argv)
 			}
 			else
 			{
-				cout<<"La commande n'a pas été reconnue"<<endl;
+				cerr<<"You must provide an argument to the command -p"<<endl;
 			}
 		}
 		else if(strcmp(argv[1],"-v") == 0)
