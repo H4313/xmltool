@@ -16,10 +16,10 @@ int main(int argc, char ** argv)
 #ifdef XMLDEBUG
 	xmldebug = 1;
 #endif
-	if(argc == 3)
+	if(strcmp(argv[1],"-p") == 0)
 	{
-		if(strcmp(argv[1],"-p") == 0)
-		{
+		if(argc == 3)
+		{	
 			FILE * fid;
 			fid = fopen(argv[2],"r");
 			if (!fid)
@@ -42,21 +42,20 @@ int main(int argc, char ** argv)
 				return 1;
 			}
 		}
-		else if(strcmp(argv[1],"-v") == 0)
-		{
-		}
-		else if(strcmp(argv[1],"-t") == 0)
-		{
-		}
 		else
 		{
 			cout<<"La commande n'a pas été reconnue"<<endl;
 		}
 	}
+	else if(strcmp(argv[1],"-v") == 0)
+	{
+	}
+	else if(strcmp(argv[1],"-t") == 0)
+	{
+	}
 	else
 	{
 		cout<<"La commande n'a pas été reconnue"<<endl;
-	}	
-	
+	}
 	return 0;
 }
