@@ -11,4 +11,8 @@ using namespace std;
 #define debug(x) ((void) 0)
 #endif
 
+// TRUE/FALSE
+#define TRUE 1
+#define FALSE 0
+
 #endif
