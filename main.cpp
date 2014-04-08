@@ -24,8 +24,8 @@ int main(int argc, char ** argv)
 			fid = fopen(argv[2],"r");
 			if (!fid)
 			{
-				cout<<"Impossible d'ouvrir le fichier "<<argv[2]<<endl;
-				return 0;
+				cerr<<"Unable to open "<<argv[2]<<endl;
+				return 1;
 			}
 			xmlin = fid;
 			Document * document;
@@ -57,5 +57,5 @@ int main(int argc, char ** argv)
 		cout<<"La commande n'a pas été reconnue"<<endl;
 	}	
 	
-	return 1;
+	return 0;
 }
