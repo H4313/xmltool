@@ -150,7 +150,25 @@ Element* Element::traiterTemplate(Element* elemXML,Element *racineXLS){
 			if((*selectOptVal).compare(".") == 0)
 			{
 			  newChildren->push_back((*(elemXML->items))[0]);
-			}//else TODO
+			}else
+			{ //recherche de l'element parmi les items
+			  if(elemXML->items)
+			   {
+				 for(int j = 0 ; j < elemXML->items->size() ; j++)
+				 {
+					Item *it = (*(elemXML->items))[j];
+					if(it)
+					{
+   						Element* elCh = dynamic_cast<Element*>(it);
+						if(elCh && (*(elCh->name)).compare(*selectOptVal) == 0)
+						{ 
+							newChildren->push_back((*(elCh->items))[0]);
+							break;
+						}
+					}
+				 }
+			   }
+			}
 		   }else
 		     {   
 			Element *res = elemXLS->traiterTemplate(elemXML, racineXLS);
