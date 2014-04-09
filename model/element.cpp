@@ -201,7 +201,7 @@ void Element::traiterResultat(Element *res)
 				}
 			}
 		}
-		//detele res
+		//delete res;
 	}else
 	{ 
 		items->push_back(res);
