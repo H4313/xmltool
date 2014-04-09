@@ -87,7 +87,7 @@ int main(int argc, char ** argv)
 			}
 			else
 			{
-				cerr<<"You must provide an argument to the command -v"<<endl;
+				cerr<<"You must provide two arguments to the command -v: an xml file and an xsd file"<<endl;
 			}
 		}
 		else if(strcmp(argv[1],"-t") == 0)
@@ -138,7 +138,7 @@ int main(int argc, char ** argv)
 			}
 			else
 			{
-				cerr<<"You must provide an argument to the command -t"<<endl;
+				cerr<<"You must provide two arguments to the command -t: an xml file and an xsl file"<<endl;
 			}
 			
 		}
