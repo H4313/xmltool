@@ -17,6 +17,6 @@ Attribute::~Attribute()
 void Attribute::display()
 {
 	if(name && value)
-		cout<<" "<<*name<<" = "<<*value;
+		cout<<" "<<*name<<" = \""<<*value<<"\"";
 }
 
