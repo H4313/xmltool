@@ -65,9 +65,9 @@ int main(int argc, char ** argv)
 					{
 					  //document->display();
 					  //document2->display();
-					////
-						// Validation XSD
-					////
+					//// Validation XML
+						cout << "Validation..." << endl;
+						document->Validation();
 
 					  delete document;
 					  delete document2;
