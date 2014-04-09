@@ -12,7 +12,7 @@ using namespace std;
 
 class Element : public Item
 {
-	private :
+	private : 
 		string * name;
 		vector<Attribute *> * attributes;
 		vector<Item *> * items;
@@ -39,6 +39,16 @@ class Element : public Item
 		Element* traiterTemplate(Element* elemXML,Element *racineXLS);
 		// retrouver le template (pour l'instant direct dans l'arbre XLS)
 		Element* getTemplateMatching(string* matchName);
+
+		private:
+			string* getAttributeValue(string atrName);
+			void traiterResultat(Element *res);
+			void traiterValueOf(Element *elemXLS,Element *elemXML);
+			void traiterApplyTemplate(Element *elemXLS,Element *elemXML, Element *racineXLS);
+		public: 
+			void displayResultatTransf(){
+				(*items)[0]->display();
+			}
 };
 
 #endif
