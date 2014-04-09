@@ -156,6 +156,6 @@ Item* Element::traiterTemplate(Element* elemXML,Element *racineXLS){
 	} 
     }
  }
- Element el(name, attributes, newChildren);
- return &el;
+ Element  * el = new Element(name, attributes, newChildren);
+ return el;
 }
