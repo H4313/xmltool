@@ -16,6 +16,6 @@ CDSect::~CDSect()
 void CDSect::display()
 {
 	if(data)
-		cout<<"<!"<<*data<<">"<<endl;
+		cout<<"<![CDATA["<<*data<<"]]>"<<endl;
 }
 

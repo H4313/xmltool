@@ -13,13 +13,12 @@ using namespace std;
 
 class Document
 {
-	private :
+	public : //temporaire (sorana)
 		Prolog * prolog;
 		Element * element;
 		vector<Misc *> * miscs;
 		
 	public :
-		map<string, string> validationMap;
 		Document(Prolog * p, Element * e, vector<Misc *> * m);
 		~Document();
 		void Validation();

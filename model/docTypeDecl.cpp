@@ -18,5 +18,5 @@ DocTypeDecl::~DocTypeDecl()
 void DocTypeDecl::display()
 {
 	if(name && externalID && data)
-		cout<<"<!DOCTYPE "<<*name<<" "<<*externalID<<" "<<*data<<">"<<endl;
+		cout<<"<!DOCTYPE "<<*name<<" "<<*externalID<<" \""<<*data<<"\">"<<endl;
 }

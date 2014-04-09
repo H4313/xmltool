@@ -16,6 +16,6 @@ Comment::~Comment()
 void Comment::display()
 {
 	if(comment)
-		cout<<"<!--"<<*comment<<"-->"<<endl;
+		cout<<*comment<<endl;
 }
 

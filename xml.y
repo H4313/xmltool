@@ -102,9 +102,9 @@ document
 
 element
  : INF NOM COLON NOM attributestar SLASH SUP {string * buf = new string($2); buf->append(":"); buf->append($4); $$ = new Element(buf,$5,0);}
- | INF NOM COLON NOM attributestar SUP content INF SLASH NOM COLON NOM SUP {if(strcmp($2,$10)==0 && strcmp($4,$12)==0) {string * buf = new string($2); buf->append(":"); buf->append($4); $$ = new Element(buf,$5,$7);} else {YYABORT;}}  
+ | INF NOM COLON NOM attributestar SUP content INF SLASH NOM COLON NOM SUP {string * buf = new string($2); buf->append(":"); buf->append($4); $$ = new Element(buf,$5,$7); if(strcmp($2,$10)!=0) {cerr<<"Non matching element namespaces "<<$2<<" and "<<$10<<endl;} if(strcmp($4,$12)!=0) {cerr<<"Non matching element names "<<$4<<" and "<<$12<<endl;}}  
  | INF NOM attributestar SLASH SUP {$$ = new Element(new string($2),$3,0);}
- | INF NOM attributestar SUP content INF SLASH NOM SUP {if(strcmp($2,$8)==0) {$$ = new Element(new string($2),$3,$5);} else {YYABORT;}}
+ | INF NOM attributestar SUP content INF SLASH NOM SUP {$$ = new Element(new string($2),$3,$5); if(strcmp($2,$8)!=0) {cerr<<"Non matching element names "<<$2<<" and "<<$8<<endl;}}
  ;
  
  attributestar

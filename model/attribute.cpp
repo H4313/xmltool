@@ -14,9 +14,19 @@ Attribute::~Attribute()
 	if(value) delete value;
 }
 
+string Attribute::GetName()
+{
+	return (*name);
+}
+
+string Attribute::GetValue()
+{
+	return (*value);
+}
+
 void Attribute::display()
 {
 	if(name && value)
-		cout<<" "<<*name<<" = "<<*value;
+		cout<<" "<<*name<<" = \""<<*value<<"\"";
 }
 

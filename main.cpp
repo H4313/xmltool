@@ -67,7 +67,7 @@ int main(int argc, char ** argv)
 					  //document2->display();
 					//// Validation XML
 						cout << "Validation..." << endl;
-						document->Validation();
+						document2->Validation();
 
 					  delete document;
 					  delete document2;
@@ -87,35 +87,42 @@ int main(int argc, char ** argv)
 			}
 			else
 			{
-				cerr<<"You must provide an argument to the command -v"<<endl;
+				cerr<<"You must provide two arguments to the command -v: an xml file and an xsd file"<<endl;
 			}
 		}
 		else if(strcmp(argv[1],"-t") == 0)
 		{
-						if(argc == 4)
+			//tranformation xls
+			if(argc == 4)
 			{
 				FILE * fid = open("-t",argv[2]);
 				if (!fid) return 1;
 				xmlin = fid;
-				Document * document;
-				int retour = xmlparse(&document);
+				Document * docXML;
+				int retour = xmlparse(&docXML);
 				if (!retour)
 				{
 					FILE * fid2 = open("-t",argv[3]);
 					if (!fid2) return 1;
 					xmlin = fid2;
-					Document * document2;
-					int retourXsd = xmlparse(&document2);
+					Document * docXLS;
+					int retourXsd = xmlparse(&docXLS);
 					if (!retourXsd)
 					{
-					  //document->display();
-					  //document2->display();
-					////
-						// Validation XSD
-					////
+						//Step 0: construction du catalog des templates
+						//-pour l'instant direct dans l'arbre
 
-					  delete document;
-					  delete document2;
+						//Step1 trouver le template correpondant
+						string rootStr = "/";
+					  	Element *templ = docXLS->element->getTemplateMatching(&rootStr);
+						//if templ = null chercher par docXML->element->name 
+						//templ->display();
+						
+						Element *docTransf = templ->traiterTemplate(docXML->element, docXLS->element);
+						docTransf->display();
+						
+					  delete docXML;
+					  delete docXLS;
 					  return 0;
 					}
 					else
@@ -132,7 +139,7 @@ int main(int argc, char ** argv)
 			}
 			else
 			{
-				cerr<<"You must provide an argument to the command -t"<<endl;
+				cerr<<"You must provide two arguments to the command -t: an xml file and an xsl file"<<endl;
 			}
 			
 		}

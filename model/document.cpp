@@ -25,9 +25,26 @@ Document::~Document()
 	}
 }
 
+// XSD
 void Document::Validation()
 {
-	cout << validationMap.count() << endl;
+	if((this->element->GetName()).compare("xsd:schema") == 0)
+	{
+		//map<string, string> validationMap;
+
+		vector<Element *> * rules = this->element->GetChildren();
+		for(int i = 0 ; i < rules->size() ; i++)
+		{
+			cout << ((*rules)[i])->GetRule() << endl;
+		}
+
+		//cout << validationMap.count() << endl;
+	}
+	else
+	{
+		// ERROR
+		cerr << "Invalid XSD" << endl;
+	}
 }
 
 void Document::display()
