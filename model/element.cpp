@@ -203,7 +203,11 @@ void Element::traiterResultat(Element *res)
 		}
 		//delete res;
 	}else
-	{ 
+	{ 	
+		if((*res->name).compare("br") == 0)
+		{ 
+			res->items = 0;
+		}
 		items->push_back(res);
 	}	
 }
