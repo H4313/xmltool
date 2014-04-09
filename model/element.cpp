@@ -99,16 +99,16 @@ Element* Element::getTemplateMatching(string* matchName)
 	return 0;
 }
 
-Item* Element::traiterTemplate(Element* elemXML,Element *racineXLS){
+Element* Element::traiterTemplate(Element* elemXML,Element *racineXLS){
 
- vector<Item *> * newChildren;
+ vector<Item *> * newChildren = new std::vector<Item *>();
 
  if(items)
- {
+ {  
     for(int i = 0 ; i < items->size() ; i++)
     {
       if((*items)[i])
-      {
+      {	
 	  Element* elemXLS = dynamic_cast<Element*>((*items)[i]);
 	  if(elemXLS != 0) //est un element, pas donnee ou cdSect
 	  { 
@@ -123,39 +123,36 @@ Item* Element::traiterTemplate(Element* elemXML,Element *racineXLS){
 		      Element* childElemXML = dynamic_cast<Element*>((*(elemXML->items))[k]);
 		      if(childElemXML != 0 && (selectOptVal==0 || (*childElemXML->name).compare(*selectOptVal) == 0))
 		      {
-			 //on reprends les etapes du debut
-			 //on trouve le bon template
+			 //on reprends les etapes du debut : 1. on trouve le bon template
 		    	Element *templ = racineXLS->getTemplateMatching(childElemXML->name);
-		    	//templ->display();
-		        //traiter le template sur l'enfant
-		    	if(templ != 0)
+		    	if(templ != 0) //2.traiter le template sur l'enfant
 			{
-			  Item *res = templ->traiterTemplate(childElemXML,racineXLS);
-			  newChildren->push_back(res);							    
+			   Element *res = templ->traiterTemplate(childElemXML,racineXLS);
+			   newChildren->push_back(res);					
 			}
 		      } 
 	     	   }
-	   	   }
+	   	 }
 	     }else if ((*(elemXLS->name)).compare("xsl:value-of") == 0)
 	           {
-			//TODO
-			elemXML->display();
+			string* selectOptVal = elemXLS->getAttributeValue("select");
+			if((*selectOptVal).compare(".") == 0)
+			{
+			  newChildren->push_back((*(elemXML->items))[0]);
+			}//else TODO
 		   }else
 		     {
-			//cout << "<"<<*(elemXLS->name) << endl; //copy element(pour l'instant print)
-			//affichage sans atributes
-			Item *res = elemXLS->traiterTemplate(elemXML, racineXLS);
-			
+			Element *res = elemXLS->traiterTemplate(elemXML, racineXLS);
 			newChildren->push_back(res);
-			//cout<<endl<<"</"<<*(elemXLS->name)<<">"<<endl;
-		    }
-	   }else{
-		// (*items)[i]->display(); //copy element(pour l'instant print)
-		 newChildren->push_back((*items)[i]);
-	       }
+		     }
+	   }else
+	     {  // n'est pas element 
+		 newChildren->push_back((*items)[i]); 
+	     }
 	} 
     }
  }
- Element el(name, attributes, newChildren);
- return &el;
+
+ Element *el = new Element(name, attributes, newChildren);	
+ return el;
 }

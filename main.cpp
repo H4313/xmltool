@@ -118,7 +118,8 @@ int main(int argc, char ** argv)
 						//if templ = null chercher par docXML->element->name 
 						//templ->display();
 						
-						templ->traiterTemplate(docXML->element, docXLS->element);
+						Element *docTransf = templ->traiterTemplate(docXML->element, docXLS->element);
+						docTransf->display();
 						
 					  delete docXML;
 					  delete docXLS;

@@ -24,7 +24,7 @@ class Element : public Item
 
 		/*  Transformation de l'arbre */
 		//traiter le template sur un element XML recu en entree
-		Item* traiterTemplate(Element* elemXML,Element *racineXLS);
+		Element* traiterTemplate(Element* elemXML,Element *racineXLS);
 		// retrouver le template (pour l'instant direct dans l'arbre XLS)
 		Element* getTemplateMatching(string* matchName);
 
