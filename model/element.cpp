@@ -36,7 +36,8 @@ void Element::display()
 {
 	if(name)
 	{
-		cout<<endl<<"<"<<*name;
+	  if((*name).compare("xsl:template") != 0) 
+	  {	cout<<endl<<"<"<<*name;
 		if(attributes)
 		{
 			for(int i = 0 ; i < attributes->size() ; i++)
@@ -57,6 +58,16 @@ void Element::display()
 		{
 			cout<<"/>"<<endl;
 		}
+	   }else //temporaire (sorana) saut noeud xls:template(il faut modifie l'algo)
+	   {
+		if(items)
+		{
+			for(int i = 0 ; i < items->size() ; i++)
+			{
+				if((*items)[i]) (*items)[i]->display();
+			}
+		}
+           }
 	}
 }
 
@@ -141,7 +152,7 @@ Element* Element::traiterTemplate(Element* elemXML,Element *racineXLS){
 			  newChildren->push_back((*(elemXML->items))[0]);
 			}//else TODO
 		   }else
-		     {
+		     {   
 			Element *res = elemXLS->traiterTemplate(elemXML, racineXLS);
 			newChildren->push_back(res);
 		     }
