@@ -25,6 +25,11 @@ Document::~Document()
 	}
 }
 
+void Document::Validation()
+{
+	cout << validationMap.count() << endl;
+}
+
 void Document::display()
 {
 	if(prolog && element)
