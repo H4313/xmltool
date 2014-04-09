@@ -30,6 +30,9 @@ class Element : public Item
 
 		private:
 			string* getAttributeValue(string atrName);
+			void traiterResultat(Element *res);
+			void traiterValueOf(Element *elemXLS,Element *elemXML);
+			void traiterApplyTemplate(Element *elemXLS,Element *elemXML, Element *racineXLS);
 };
 
 #endif
