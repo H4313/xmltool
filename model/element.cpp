@@ -35,8 +35,6 @@ Element::~Element()
 void Element::display()
 {
 	if(name)
-	{
-	  if((*name).compare("xsl:template") != 0) 
 	  {	cout<<endl<<"<"<<*name;
 		if(attributes)
 		{
@@ -58,17 +56,7 @@ void Element::display()
 		{
 			cout<<"/>"<<endl;
 		}
-	   }else //temporaire (sorana) saut noeud xls:template(il faut modifie l'algo)
-	   {
-		if(items)
-		{
-			for(int i = 0 ; i < items->size() ; i++)
-			{
-				if((*items)[i]) (*items)[i]->display();
-			}
-		}
-           }
-	}
+	   }
 }
 
 string* Element::getAttributeValue(string atrName){
@@ -139,7 +127,21 @@ Element* Element::traiterTemplate(Element* elemXML,Element *racineXLS){
 		    	if(templ != 0) //2.traiter le template sur l'enfant
 			{
 			   Element *res = templ->traiterTemplate(childElemXML,racineXLS);
-			   newChildren->push_back(res);					
+		          // cout << *name << " push_back " << *(res->name) <<endl;
+			   if((*res->name).compare("xsl:template") == 0)
+			   {
+				if(res->items)
+				{
+					for(int resIt = 0 ; resIt < res->items->size() ; resIt++)
+					{
+						if((*res->items)[resIt]) newChildren->push_back((*res->items)[resIt]);
+					}
+				}
+			   }else
+			   { newChildren->push_back(res);
+			   }	
+				
+			   					
 			}
 		      } 
 	     	   }
@@ -172,7 +174,19 @@ Element* Element::traiterTemplate(Element* elemXML,Element *racineXLS){
 		   }else
 		     {   
 			Element *res = elemXLS->traiterTemplate(elemXML, racineXLS);
-			newChildren->push_back(res);
+			//cout << *name << " push_back " << *(res->name) <<endl;
+			if((*res->name).compare("xsl:template") == 0)
+			   {
+				if(res->items)
+				{
+					for(int resIt = 0 ; resIt < res->items->size() ; resIt++)
+					{
+						if((*res->items)[resIt]) newChildren->push_back((*res->items)[resIt]);
+					}
+				}
+			   }else
+			   { newChildren->push_back(res);
+			   }	
 		     }
 	   }else
 	     {  // n'est pas element 

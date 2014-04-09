@@ -12,7 +12,7 @@ using namespace std;
 
 class Element : public Item
 {
-	private :
+	public : //temporary(sorana)
 		string * name;
 		vector<Attribute *> * attributes;
 		vector<Item *> * items;

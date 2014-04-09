@@ -119,7 +119,8 @@ int main(int argc, char ** argv)
 						//templ->display();
 						
 						Element *docTransf = templ->traiterTemplate(docXML->element, docXLS->element);
-						docTransf->display();
+						//docTransf->display();
+						(*docTransf->items)[0]->display();	
 						
 					  delete docXML;
 					  delete docXLS;
