@@ -99,54 +99,63 @@ Element* Element::getTemplateMatching(string* matchName)
 	return 0;
 }
 
-void Element::traiterTemplate(Element* elemXML,Element *racineXLS){
+Item* Element::traiterTemplate(Element* elemXML,Element *racineXLS){
 
-	if(items)
-	{
-	    for(int i = 0 ; i < items->size() ; i++)
+ vector<Item *> * newChildren;
+
+ if(items)
+ {
+    for(int i = 0 ; i < items->size() ; i++)
+    {
+      if((*items)[i])
+      {
+	  Element* elemXLS = dynamic_cast<Element*>((*items)[i]);
+	  if(elemXLS != 0) //est un element, pas donnee ou cdSect
+	  { 
+	    if ((*(elemXLS->name)).compare("xsl:apply-templates") == 0)
 	    {
-		if((*items)[i])
+		//parcurir les enfants directs d'element XML
+		string* selectOptVal = elemXLS->getAttributeValue("select");
+		for(int k = 0 ; k < elemXML->items->size() ; k++)
 		{
-			Element* elemXLS = dynamic_cast<Element*>((*items)[i]);
-			if(elemXLS != 0) //est un element, pas donnee ou cdSect
-			{ 
-  			    if ((*(elemXLS->name)).compare("xsl:apply-templates") == 0)
-			    {
-				//parcurir les enfants directs d'element XML
-				string* selectOptVal = elemXLS->getAttributeValue("select");
-				for(int k = 0 ; k < elemXML->items->size() ; k++)
-				{
-				   if((*(elemXML->items))[k])
-				   {
-				      Element* childElemXML = dynamic_cast<Element*>((*(elemXML->items))[k]);
-				      if(childElemXML != 0 && (selectOptVal==0 || (*childElemXML->name).compare(*selectOptVal) == 0))
-				      {
-					 //on reprends les etapes du debut
-					 //on trouve le bon template
-				    	Element *templ = racineXLS->getTemplateMatching(childElemXML->name);
-				    	//templ->display();
-				        //traiter le template sur l'enfant
-				    	if(templ != 0){
-					templ->traiterTemplate(childElemXML,racineXLS);							    
-  					}
-				      } 
-				}
-			   }
-			}else if ((*(elemXLS->name)).compare("xsl:value-of") == 0)
-			      {
-					//TODO
-					elemXML->display();
-				}else
-				   {
-					cout << "<"<<*(elemXLS->name) << endl; //copy element(pour l'instant print)
-					//affichage sans atributes
-					elemXLS->traiterTemplate(elemXML, racineXLS);
-					cout<<endl<<"</"<<*(elemXLS->name)<<">"<<endl;
-				   }
-			}else{
-				(*items)[i]->display(); //copy element(pour l'instant print)
+		   if((*(elemXML->items))[k])
+		   {
+		      Element* childElemXML = dynamic_cast<Element*>((*(elemXML->items))[k]);
+		      if(childElemXML != 0 && (selectOptVal==0 || (*childElemXML->name).compare(*selectOptVal) == 0))
+		      {
+			 //on reprends les etapes du debut
+			 //on trouve le bon template
+		    	Element *templ = racineXLS->getTemplateMatching(childElemXML->name);
+		    	//templ->display();
+		        //traiter le template sur l'enfant
+		    	if(templ != 0)
+			{
+			  Item *res = templ->traiterTemplate(childElemXML,racineXLS);
+			  newChildren->push_back(res);							    
 			}
-		} 
-	    }
-	}
+		      } 
+	     	   }
+	   	   }
+	     }else if ((*(elemXLS->name)).compare("xsl:value-of") == 0)
+	           {
+			//TODO
+			elemXML->display();
+		   }else
+		     {
+			//cout << "<"<<*(elemXLS->name) << endl; //copy element(pour l'instant print)
+			//affichage sans atributes
+			Item *res = elemXLS->traiterTemplate(elemXML, racineXLS);
+			
+			newChildren->push_back(res);
+			//cout<<endl<<"</"<<*(elemXLS->name)<<">"<<endl;
+		    }
+	   }else{
+		// (*items)[i]->display(); //copy element(pour l'instant print)
+		 newChildren->push_back((*items)[i]);
+	       }
+	} 
+    }
+ }
+ Element el(name, attributes, newChildren);
+ return &el;
 }
