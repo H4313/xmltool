@@ -12,7 +12,7 @@ using namespace std;
 
 class Document
 {
-	public : //temporaire (sorana)
+	private : 
 		Prolog * prolog;
 		Element * element;
 		vector<Misc *> * miscs;
@@ -21,6 +21,10 @@ class Document
 		Document(Prolog * p, Element * e, vector<Misc *> * m);
 		~Document();
 		void display();
+		Element* getElement()
+		{
+			return element;
+		}
 };
 
 #endif

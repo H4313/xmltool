@@ -35,8 +35,6 @@ Element::~Element()
 void Element::display()
 {
 	if(name)
-	{
-	  if((*name).compare("xsl:template") != 0) 
 	  {	cout<<endl<<"<"<<*name;
 		if(attributes)
 		{
@@ -58,17 +56,7 @@ void Element::display()
 		{
 			cout<<"/>"<<endl;
 		}
-	   }else //temporaire (sorana) saut noeud xls:template(il faut modifie l'algo)
-	   {
-		if(items)
-		{
-			for(int i = 0 ; i < items->size() ; i++)
-			{
-				if((*items)[i]) (*items)[i]->display();
-			}
-		}
-           }
-	}
+	   }
 }
 
 string* Element::getAttributeValue(string atrName){
@@ -76,9 +64,9 @@ string* Element::getAttributeValue(string atrName){
 		{
 			for(int i = 0 ; i < attributes->size() ; i++)
 			{
-				if((*attributes)[i] && (*(*attributes)[i]->name).compare(atrName) ==0 )  
+				if((*attributes)[i] && (*(*attributes)[i]->getName()).compare(atrName) ==0 )  
 				{
-					return (*attributes)[i]->value;				
+					return (*attributes)[i]->getValue();				
 				}
 			}
 		}
@@ -110,77 +98,119 @@ Element* Element::getTemplateMatching(string* matchName)
 	return 0;
 }
 
+/* Algorithme de tranformation d'arbre */
 Element* Element::traiterTemplate(Element* elemXML,Element *racineXLS){
 
- vector<Item *> * newChildren = new std::vector<Item *>();
-
  if(items)
- {  
+ { 
+    vector<Item *> * newChildren = new std::vector<Item *>();
+    Element *el = new Element(name, attributes, newChildren);	 
     for(int i = 0 ; i < items->size() ; i++)
     {
-      if((*items)[i])
-      {	
-	  Element* elemXLS = dynamic_cast<Element*>((*items)[i]);
-	  if(elemXLS != 0) //est un element, pas donnee ou cdSect
-	  { 
-	    if ((*(elemXLS->name)).compare("xsl:apply-templates") == 0)
-	    {
-		//parcurir les enfants directs d'element XML
-		string* selectOptVal = elemXLS->getAttributeValue("select");
-		for(int k = 0 ; k < elemXML->items->size() ; k++)
-		{
-		   if((*(elemXML->items))[k])
-		   {
-		      Element* childElemXML = dynamic_cast<Element*>((*(elemXML->items))[k]);
-		      if(childElemXML != 0 && (selectOptVal==0 || (*childElemXML->name).compare(*selectOptVal) == 0))
-		      {
-			 //on reprends les etapes du debut : 1. on trouve le bon template
-		    	Element *templ = racineXLS->getTemplateMatching(childElemXML->name);
-		    	if(templ != 0) //2.traiter le template sur l'enfant
-			{
-			   Element *res = templ->traiterTemplate(childElemXML,racineXLS);
-			   newChildren->push_back(res);					
-			}
-		      } 
-	     	   }
-	   	 }
-	     }else if ((*(elemXLS->name)).compare("xsl:value-of") == 0)
-	           {
-			string* selectOptVal = elemXLS->getAttributeValue("select");
-			if((*selectOptVal).compare(".") == 0)
-			{
-			  newChildren->push_back((*(elemXML->items))[0]);
-			}else
-			{ //recherche de l'element parmi les items
-			  if(elemXML->items)
-			   {
-				 for(int j = 0 ; j < elemXML->items->size() ; j++)
-				 {
-					Item *it = (*(elemXML->items))[j];
-					if(it)
+		if((*items)[i])
+		{	
+			Element* elemXLS = dynamic_cast<Element*>((*items)[i]);
+			if(elemXLS != 0) //est un element, pas donnee ou cdSect
+			{	 
+				if ((*(elemXLS->name)).compare("xsl:apply-templates") == 0)
+				{
+					el->traiterApplyTemplate(elemXLS, elemXML, racineXLS);
+				}else if ((*(elemXLS->name)).compare("xsl:value-of") == 0)
 					{
-   						Element* elCh = dynamic_cast<Element*>(it);
-						if(elCh && (*(elCh->name)).compare(*selectOptVal) == 0)
-						{ 
-							newChildren->push_back((*(elCh->items))[0]);
-							break;
+						el->traiterValueOf(elemXLS, elemXML);
+					}else if ((*(elemXLS->name)).compare("xsl:for-each") == 0)
+						{
+							//TODO traiter cas for-each
+						}else
+						{   
+							Element *res = elemXLS->traiterTemplate(elemXML, racineXLS);
+							el->traiterResultat(res);
 						}
-					}
-				 }
-			   }
+			}else
+			{  // n'est pas element 
+				newChildren->push_back((*items)[i]); 
 			}
-		   }else
-		     {   
-			Element *res = elemXLS->traiterTemplate(elemXML, racineXLS);
-			newChildren->push_back(res);
-		     }
-	   }else
-	     {  // n'est pas element 
-		 newChildren->push_back((*items)[i]); 
-	     }
-	} 
+		} 
     }
+    return el;
  }
- Element  * el = new Element(name, attributes, newChildren);
- return el;
+  //No items
+  return new Element(name, attributes, 0);
+
+}
+
+/* Methode pour appliquer un template */
+void Element::traiterApplyTemplate(Element *elemXLS,Element *elemXML, Element *racineXLS)
+{
+	//parcurir les enfants directs d'element XML
+	string* selectOptVal = elemXLS->getAttributeValue("select");
+	for(int k = 0 ; k < elemXML->items->size() ; k++)
+	{
+		if((*(elemXML->items))[k])
+		{
+			Element* childElemXML = dynamic_cast<Element*>((*(elemXML->items))[k]);
+			if(childElemXML != 0 && (selectOptVal==0 || (*childElemXML->name).compare(*selectOptVal) == 0))
+			{
+				//on reprends les etapes du debut : 1. on trouve le bon template
+				Element *templ = racineXLS->getTemplateMatching(childElemXML->name);
+				if(templ != 0) //2.traiter le template sur l'enfant
+				{
+					Element *res = templ->traiterTemplate(childElemXML,racineXLS);
+					// cout << *name << " push_back " << *(res->name) <<endl;
+					traiterResultat(res);	
+				}
+			} 
+		}
+	}
+}
+
+/* Methode pour traiter le cas valueOf*/
+void Element::traiterValueOf(Element *elemXLS,Element *elemXML)
+{
+	string* selectOptVal = elemXLS->getAttributeValue("select");
+	if((*selectOptVal).compare(".") == 0)
+	{
+		items->push_back((*(elemXML->items))[0]);
+	}else
+	{ //recherche de l'element parmi les items
+		if(elemXML->items)
+		{
+			for(int j = 0 ; j < elemXML->items->size() ; j++)
+			{
+				Item *it = (*(elemXML->items))[j];
+				if(it)
+				{
+					Element* elCh = dynamic_cast<Element*>(it);
+					if(elCh && (*(elCh->name)).compare(*selectOptVal) == 0)
+					{ 
+						items->push_back((*(elCh->items))[0]);
+						break;
+					}
+				}
+			}
+		}
+	}
+}
+
+/* Methode pour traiter un resultat intermediaire
+-> un noeud du template peut entrainer l'application d'un autre template*/
+void Element::traiterResultat(Element *res)
+{
+	if((*res->name).compare("xsl:template") == 0)
+	{
+		if(res->items)
+		{
+			for(int resIt = 0 ; resIt < res->items->size() ; resIt++)
+			{
+				if((*res->items)[resIt]) 
+				{
+					items->push_back((*res->items)[resIt]);
+				}
+			}
+		}
+		//delete res;
+	}else
+	{ 	
+		items->push_back(res);
+	}	
 }

@@ -114,12 +114,12 @@ int main(int argc, char ** argv)
 
 						//Step1 trouver le template correpondant
 						string rootStr = "/";
-					  	Element *templ = docXLS->element->getTemplateMatching(&rootStr);
+					  	Element *templ = docXLS->getElement()->getTemplateMatching(&rootStr);
 						//if templ = null chercher par docXML->element->name 
 						//templ->display();
 						
-						Element *docTransf = templ->traiterTemplate(docXML->element, docXLS->element);
-						docTransf->display();
+						Element *docTransf = templ->traiterTemplate(docXML->getElement(), docXLS->getElement());
+						docTransf->displayResultatTransf();
 						
 					  delete docXML;
 					  delete docXLS;
