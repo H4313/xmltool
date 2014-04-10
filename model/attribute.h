@@ -8,7 +8,7 @@ using namespace std;
 
 class Attribute
 {
-	public : //temporaire (sorana)
+	private : 
 		string * name;
 		string * value;
 		
@@ -18,6 +18,9 @@ class Attribute
 		string GetName();
 		string GetValue();
 		void display();
+	
+		string* getValue(){	return value;	}
+		string* getName(){	return name;	}
 };
 
 #endif
