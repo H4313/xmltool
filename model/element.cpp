@@ -64,9 +64,9 @@ string* Element::getAttributeValue(string atrName){
 		{
 			for(int i = 0 ; i < attributes->size() ; i++)
 			{
-				if((*attributes)[i] && (*(*attributes)[i]->name).compare(atrName) ==0 )  
+				if((*attributes)[i] && (*(*attributes)[i]->getName()).compare(atrName) ==0 )  
 				{
-					return (*attributes)[i]->value;				
+					return (*attributes)[i]->getValue();				
 				}
 			}
 		}
@@ -98,13 +98,13 @@ Element* Element::getTemplateMatching(string* matchName)
 	return 0;
 }
 
+/* Algorithme de tranformation d'arbre */
 Element* Element::traiterTemplate(Element* elemXML,Element *racineXLS){
 
- vector<Item *> * newChildren = new std::vector<Item *>();
- Element *el = new Element(name, attributes, newChildren);	
-
  if(items)
- {  
+ { 
+    vector<Item *> * newChildren = new std::vector<Item *>();
+    Element *el = new Element(name, attributes, newChildren);	 
     for(int i = 0 ; i < items->size() ; i++)
     {
 		if((*items)[i])
@@ -118,23 +118,29 @@ Element* Element::traiterTemplate(Element* elemXML,Element *racineXLS){
 				}else if ((*(elemXLS->name)).compare("xsl:value-of") == 0)
 					{
 						el->traiterValueOf(elemXLS, elemXML);
-					}else
-					{   
-						Element *res = elemXLS->traiterTemplate(elemXML, racineXLS);
-						//cout << *name << " push_back " << *(res->name) <<endl;
-						el->traiterResultat(res);
-					}
+					}else if ((*(elemXLS->name)).compare("xsl:for-each") == 0)
+						{
+							//TODO traiter cas for-each
+						}else
+						{   
+							Element *res = elemXLS->traiterTemplate(elemXML, racineXLS);
+							el->traiterResultat(res);
+						}
 			}else
 			{  // n'est pas element 
 				newChildren->push_back((*items)[i]); 
 			}
 		} 
     }
+    return el;
  }
 
- return el;
+  //No items
+  return new Element(name, attributes, 0);
+
 }
 
+/* Methode pour appliquer un template */
 void Element::traiterApplyTemplate(Element *elemXLS,Element *elemXML, Element *racineXLS)
 {
 	//parcurir les enfants directs d'element XML
@@ -159,6 +165,7 @@ void Element::traiterApplyTemplate(Element *elemXLS,Element *elemXML, Element *r
 	}
 }
 
+/* Methode pour traiter le cas valueOf*/
 void Element::traiterValueOf(Element *elemXLS,Element *elemXML)
 {
 	string* selectOptVal = elemXLS->getAttributeValue("select");
@@ -186,7 +193,8 @@ void Element::traiterValueOf(Element *elemXLS,Element *elemXML)
 	}
 }
 
-//eliminate recursion
+/* Methode pour traiter un resultat intermediaire
+-> un noeud du template peut entrainer l'application d'un autre template*/
 void Element::traiterResultat(Element *res)
 {
 	if((*res->name).compare("xsl:template") == 0)
@@ -204,10 +212,6 @@ void Element::traiterResultat(Element *res)
 		//delete res;
 	}else
 	{ 	
-		if((*res->name).compare("br") == 0)
-		{ 
-			res->items = 0;
-		}
 		items->push_back(res);
 	}	
 }
