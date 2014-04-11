@@ -11,6 +11,7 @@ class Misc : public Item
 {
 	public :
 		virtual void display() = 0;
+		virtual ~Misc() {};
 };
 
 #endif
