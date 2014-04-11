@@ -14,7 +14,7 @@
    <xsd:element name="personnes">
       <xsd:complexType>
          <xsd:sequence>
-            <xsd:element ref="personne" maxOccurs="2" minOccurs="2" />
+            <xsd:element ref="personne" minOccurs="2" />
          </xsd:sequence>
       </xsd:complexType>
    </xsd:element>

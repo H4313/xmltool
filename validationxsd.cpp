@@ -32,7 +32,7 @@ bool ValidationXSD::validation(Element * element)
 		reti = regcomp(&regex, eltRegex->second.c_str(), REG_EXTENDED|REG_ICASE|REG_NOSUB|REG_NEWLINE);
 		if( reti != 0 )
 		{
-			cerr << "Wrong Regex" << endl;
+//			cerr << "Wrong Regex" << endl;
 			return false;
 		}
 
@@ -46,7 +46,7 @@ bool ValidationXSD::validation(Element * element)
 
 		if( reti != 0 )
 		{
-			cerr << "Regex match failed" << endl;
+//			cerr << "Regex match failed" << endl;
 			return false;
 		}
 	}
