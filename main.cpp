@@ -140,7 +140,6 @@ int main(int argc, char ** argv)
 						Element *docTransf = templ->traiterTemplate(racineXML, docXLS->getElement(), racineXML);
 						docTransf->displayResultatTransf();
 						
-						delete docTransf;
 						delete docXML;
 						delete docXLS;
 						return 0;
