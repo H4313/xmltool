@@ -37,14 +37,15 @@ class Element : public Item
 
 		/*  Transformation de l'arbre */
 		//traiter le template sur un element XML recu en entree
-		Element* traiterTemplate(Element* elemXML,Element *racineXLS);
+		Element* traiterTemplate(Element* elemXML,Element *racineXLS, Element *racineXML);
 		// retrouver le template (pour l'instant direct dans l'arbre XLS)
 		Element* getTemplateMatching(string* matchName);
 
 		private:
 			void traiterResultat(Element *res);
 			void traiterValueOf(Element *elemXLS,Element *elemXML);
-			void traiterApplyTemplate(Element *elemXLS,Element *elemXML, Element *racineXLS);
+			void traiterApplyTemplate(Element *elemXLS,Element *elemXML, Element *racineXLS, Element *racineXML);
+			void traiterForEach(string chemin,Element *elemXLS,Element *elemXML, Element *racineXLS, Element *racineXML);
 		public: 
 			void displayResultatTransf(){
 				(*items)[0]->display();

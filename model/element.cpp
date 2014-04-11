@@ -272,7 +272,8 @@ Element* Element::getTemplateMatching(string* matchName)
 }
 
 /* Algorithme de tranformation d'arbre */
-Element* Element::traiterTemplate(Element* elemXML,Element *racineXLS){
+//racineXML pour le cas for-each
+Element* Element::traiterTemplate(Element* elemXML,Element *racineXLS, Element *racineXML){
 
  if(items)
  { 
@@ -287,16 +288,18 @@ Element* Element::traiterTemplate(Element* elemXML,Element *racineXLS){
 			{	 
 				if ((*(elemXLS->name)).compare("xsl:apply-templates") == 0)
 				{
-					el->traiterApplyTemplate(elemXLS, elemXML, racineXLS);
+					el->traiterApplyTemplate(elemXLS, elemXML, racineXLS, racineXML);
 				}else if ((*(elemXLS->name)).compare("xsl:value-of") == 0)
 					{
 						el->traiterValueOf(elemXLS, elemXML);
 					}else if ((*(elemXLS->name)).compare("xsl:for-each") == 0)
 						{
-							//TODO traiter cas for-each
+							//!!! Le foreach called for the first time with RACINE XML !!!
+							string* chemin = elemXLS->getAttributeValue("select");
+							el->traiterForEach(*chemin, elemXLS, racineXML, racineXLS, racineXML);
 						}else
 						{   
-							Element *res = elemXLS->traiterTemplate(elemXML, racineXLS);
+							Element *res = elemXLS->traiterTemplate(elemXML, racineXLS, racineXML);
 							el->traiterResultat(res);
 						}
 			}else
@@ -312,8 +315,46 @@ Element* Element::traiterTemplate(Element* elemXML,Element *racineXLS){
 
 }
 
-/* Methode pour appliquer un template */
-void Element::traiterApplyTemplate(Element *elemXLS,Element *elemXML, Element *racineXLS)
+/* Methode pour traiter le cas for-each */
+void Element::traiterForEach(string chemin,Element *elemXLS,Element *elemXML, Element *racineXLS, Element *racineXML)
+{
+  size_t idx = chemin.find("/");
+  string first, second;
+  if ( idx != string::npos)
+  {   
+	first = chemin.substr (0, idx);     
+    	second = chemin.substr (idx+1);	
+  }else	{ first = chemin; second = ""; 	}
+
+  if((*elemXML->name).compare(first) == 0)
+  {
+	if(second.compare("") != 0)
+	{ //il faut encore descendre
+		if(elemXML->items)
+		{
+			for(int j = 0 ; j < elemXML->items->size() ; j++)
+			{
+				Item *it = (*(elemXML->items))[j];
+				if(it)
+				{
+					Element* elCh = dynamic_cast<Element*>(it);
+					if(elCh)
+					{ 
+						traiterForEach(second, elemXLS, elCh, racineXLS, racineXML);
+					}
+				}
+			}
+		}
+	}else
+	{
+		Element *res = elemXLS->traiterTemplate(elemXML,racineXLS, racineXML);
+		traiterResultat(res);
+	}
+  }
+}
+
+/* Methode pour traiter le cas applyTemplate */
+void Element::traiterApplyTemplate(Element *elemXLS,Element *elemXML, Element *racineXLS, Element *racineXML)
 {
 	//parcurir les enfants directs d'element XML
 	string* selectOptVal = elemXLS->getAttributeValue("select");
@@ -328,7 +369,7 @@ void Element::traiterApplyTemplate(Element *elemXLS,Element *elemXML, Element *r
 				Element *templ = racineXLS->getTemplateMatching(childElemXML->name);
 				if(templ != 0) //2.traiter le template sur l'enfant
 				{
-					Element *res = templ->traiterTemplate(childElemXML,racineXLS);
+					Element *res = templ->traiterTemplate(childElemXML,racineXLS, racineXML);
 					// cout << *name << " push_back " << *(res->name) <<endl;
 					traiterResultat(res);	
 				}
@@ -368,8 +409,8 @@ void Element::traiterValueOf(Element *elemXLS,Element *elemXML)
 /* Methode pour traiter un resultat intermediaire
 -> un noeud du template peut entrainer l'application d'un autre template*/
 void Element::traiterResultat(Element *res)
-{
-	if((*res->name).compare("xsl:template") == 0)
+{ 
+	if((*res->name).compare("xsl:template") == 0 || (*res->name).compare("xsl:for-each") == 0 )
 	{
 		if(res->items)
 		{

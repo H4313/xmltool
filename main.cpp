@@ -127,7 +127,9 @@ int main(int argc, char ** argv)
 						//if templ = null chercher par docXML->element->name 
 						//templ->display();
 						
-						Element *docTransf = templ->traiterTemplate(docXML->getElement(), docXLS->getElement());
+						//params :  elemXML, racineXLS, racineXML
+						Element *racineXML = docXML->getElement();
+						Element *docTransf = templ->traiterTemplate(racineXML, docXLS->getElement(), racineXML);
 						docTransf->displayResultatTransf();
 						
 					  delete docXML;
