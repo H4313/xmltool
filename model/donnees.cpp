@@ -18,3 +18,8 @@ void Donnees::display()
 	if(data)
 		cout<<*data;
 }
+
+string Donnees::GetData()
+{
+	return (*data);
+}

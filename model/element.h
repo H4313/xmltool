@@ -25,12 +25,13 @@ class Element : public Item
 		~Element();
 		void display();
 		string GetName();
+		string GetValue();
 		vector<Element *> * GetChildren();
 		Attribute * GetAttributeByName(string name);
 		vector<Item *> * GetItems();
 
 		// Validation XSD
-		void GetChildrenTag();
+		string GetChildrenTag();
 		// Element doit etre un element XSD
 		string GetRule();
 
@@ -41,7 +42,6 @@ class Element : public Item
 		Element* getTemplateMatching(string* matchName);
 
 		private:
-			string* getAttributeValue(string atrName);
 			void traiterResultat(Element *res);
 			void traiterValueOf(Element *elemXLS,Element *elemXML);
 			void traiterApplyTemplate(Element *elemXLS,Element *elemXML, Element *racineXLS);

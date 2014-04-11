@@ -2,6 +2,7 @@
 #include "element.h"
 #include "attribute.h"
 #include "item.h"
+#include "donnees.h"
 
 #include <string>
 #include <vector>
@@ -34,27 +35,27 @@ Element::~Element()
 }
 
 /// Validation XSD ///
-void Element::GetChildrenTag()
+string Element::GetChildrenTag()
 {
-//	string * str = new string("^(");
-//	for(int i = 0 ; i < items->size() ; i++)
-//	{
-//		if( typeid((*(*items)[i])) == typeid(Element) )
-//		{
-//			str->append("(<" + (dynamic_cast<Element*>((*items)[i]))->GetName() + ">)|");
-//		}
-//	}
-//	str->erase(str->length()-1, 1);
-//	str->append(")$");
-
+	Element * child;
 	string * str = new string();
 	for(int i = 0 ; i < items->size() ; i++)
 	{
 		if( typeid((*(*items)[i])) == typeid(Element) )
 		{
-			str->append("<" + (dynamic_cast<Element*>((*items)[i]))->GetName() + ">");
+			child = dynamic_cast<Element*>((*items)[i]);
+
+			str->append("<" + child->GetName() + ">");
+
+			if(child->GetChildren()->size() == 0)
+			{
+				str->append(child->GetValue());
+				str->append("</" + child->GetName() + ">");
+			}
 		}
 	}
+
+	return (*str);
 }
 
 // Element doit etre un element XSD
@@ -93,7 +94,7 @@ string Element::GetRule()
 				Attribute * attributeMaxOccus = NULL;
 				Attribute * attributeMinOccus = NULL;
 				vector<Element *> * xsdRules = xsdRuleType->GetChildren();
-				for(int i = 0 ; i < xsdRules->size() ; i++)
+				for(int i = xsdRules->size()-1 ; i >= 0; i--)
 				{
 					attributeName = (*xsdRules)[i]->GetAttributeByName("name");
 					attributeType = (*xsdRules)[i]->GetAttributeByName("type");
@@ -102,7 +103,16 @@ string Element::GetRule()
 					attributeMinOccus = (*xsdRules)[i]->GetAttributeByName("minOccurs");
 					if(attributeName != NULL && attributeType != NULL)
 					{
-						str->append("(<" + attributeName->GetValue() + ">)" + (*regexSeparator));
+						str->append("((<" + attributeName->GetValue() + ">)|");
+						if((attributeType->GetValue()).compare("xsd:string") == 0)
+						{
+							str->append("((<" + attributeName->GetValue() + ">).*(<\\/" + attributeName->GetValue() + ">)))");
+						}
+						else if((attributeType->GetValue()).compare("xsd:date") == 0)
+						{
+							str->append("((<" + attributeName->GetValue() + ">)[0-9]{4}-[0-9]{2}-[0-9]{2}(<\\/" + attributeName->GetValue() + ">)))");
+						}
+						str->append((*regexSeparator));
 					}
 					else if(attributeRef != NULL
 							&& (attributeMinOccus != NULL || attributeMaxOccus != NULL))
@@ -114,6 +124,7 @@ string Element::GetRule()
 								+ (*regexSeparator));
 					}
 				}
+				delete xsdRules;
 				if(regexSeparator->length() > 0) str->erase(str->length()-1, 1);
 				str->append(")$");
 			}
@@ -178,6 +189,19 @@ vector<Item *> * Element::GetItems()
 string Element::GetName()
 {
 	return (*name);
+}
+
+string Element::GetValue()
+{
+	for(int i = 0 ; i < items->size() ; i++)
+	{
+		if( typeid((*(*items)[i])) == typeid(Donnees) )
+		{
+			return (dynamic_cast<Donnees*>((*items)[i]))->GetData();
+		}
+	}
+
+	return "";
 }
 
 void Element::display()

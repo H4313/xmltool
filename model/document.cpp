@@ -26,25 +26,33 @@ Document::~Document()
 }
 
 // XSD
-void Document::Validation()
+map<string, string> * Document::GetValidator()
 {
+	map<string, string> * validationMap = new map<string, string>();
+
 	if((this->element->GetName()).compare("xsd:schema") == 0)
 	{
-		//map<string, string> validationMap;
 
 		vector<Element *> * rules = this->element->GetChildren();
 		for(int i = 0 ; i < rules->size() ; i++)
 		{
-			cout << ((*rules)[i])->GetRule() << endl;
+			validationMap->insert (
+					pair<string,string>(
+							((*rules)[i])->GetAttributeByName("name")->GetValue(),
+							((*rules)[i])->GetRule()
+					)
+			);
 		}
 
-		//cout << validationMap.count() << endl;
+//		cout << validationMap->size() << endl;
 	}
 	else
 	{
 		// ERROR
 		cerr << "Invalid XSD" << endl;
 	}
+
+	return validationMap;
 }
 
 void Document::display()

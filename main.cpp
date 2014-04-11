@@ -1,6 +1,7 @@
 #include "commun.h"
 #include "model/document.h"
 #include "maintools.h"
+#include "validationxsd.h"
 
 #include <iostream>
 #include <cstring>
@@ -52,26 +53,34 @@ int main(int argc, char ** argv)
 				FILE * fid = open("-v",argv[2]);
 				if (!fid) return 1;
 				xmlin = fid;
-				Document * document;
-				int retour = xmlparse(&document);
+				Document * xml;
+				int retour = xmlparse(&xml);
 				if (!retour)
 				{
 					FILE * fid2 = open("-v",argv[3]);
 					if (!fid2) return 1;
 					xmlin = fid2;
-					Document * document2;
-					int retourXsd = xmlparse(&document2);
+					Document * xsd;
+					int retourXsd = xmlparse(&xsd);
 					if (!retourXsd)
 					{
-					  //document->display();
-					  //document2->display();
-					//// Validation XML
-						cout << "Validation..." << endl;
-						document2->Validation();
+						//// Validation du XML avec le XSD
+						ValidationXSD * validationXSD = new ValidationXSD(xml, xsd);
 
-					  delete document;
-					  delete document2;
-					  return 0;
+						cout << "The file " << argv[2];
+						if(validationXSD->XmlIsValid())
+						{
+							cout << " is valid wrt ";
+						}
+						else
+						{
+							cout << " is not valid wrt ";
+						}
+						cout << argv[3] << endl;
+
+						delete xml;
+						delete xsd;
+						return 0;
 					}
 					else
 					{
