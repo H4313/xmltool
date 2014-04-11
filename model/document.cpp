@@ -25,6 +25,36 @@ Document::~Document()
 	}
 }
 
+// XSD
+map<string, string> * Document::GetValidator()
+{
+	map<string, string> * validationMap = new map<string, string>();
+
+	if((this->element->GetName()).compare("xsd:schema") == 0)
+	{
+
+		vector<Element *> * rules = this->element->GetChildren();
+		for(int i = 0 ; i < rules->size() ; i++)
+		{
+			validationMap->insert (
+					pair<string,string>(
+							((*rules)[i])->GetAttributeByName("name")->GetValue(),
+							((*rules)[i])->GetRule()
+					)
+			);
+		}
+
+//		cout << validationMap->size() << endl;
+	}
+	else
+	{
+		// ERROR
+		cerr << "Invalid XSD" << endl;
+	}
+
+	return validationMap;
+}
+
 void Document::display()
 {
 	if(prolog && element)

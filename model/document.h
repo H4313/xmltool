@@ -7,6 +7,7 @@
 
 #include <iostream>
 #include <vector>
+#include <map>
 
 using namespace std;
 
@@ -20,6 +21,7 @@ class Document
 	public :
 		Document(Prolog * p, Element * e, vector<Misc *> * m);
 		~Document();
+		map<string, string> * GetValidator();
 		void display();
 		Element* getElement()
 		{

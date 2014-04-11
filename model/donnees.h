@@ -17,6 +17,7 @@ class Donnees : public Item
 		Donnees(string * d);
 		~Donnees();
 		void display();
+		string GetData();
 };
 
 #endif

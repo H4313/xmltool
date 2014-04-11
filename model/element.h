@@ -16,11 +16,24 @@ class Element : public Item
 		string * name;
 		vector<Attribute *> * attributes;
 		vector<Item *> * items;
+
+		// Transformation XSL
+		string* getAttributeValue(string atrName);
 		
 	public :
 		Element(string * n, vector<Attribute *> * a, vector<Item *> * i);
 		~Element();
 		void display();
+		string GetName();
+		string GetValue();
+		vector<Element *> * GetChildren();
+		Attribute * GetAttributeByName(string name);
+		vector<Item *> * GetItems();
+
+		// Validation XSD
+		string GetChildrenTag();
+		// Element doit etre un element XSD
+		string GetRule();
 
 		/*  Transformation de l'arbre */
 		//traiter le template sur un element XML recu en entree
@@ -29,7 +42,6 @@ class Element : public Item
 		Element* getTemplateMatching(string* matchName);
 
 		private:
-			string* getAttributeValue(string atrName);
 			void traiterResultat(Element *res);
 			void traiterValueOf(Element *elemXLS,Element *elemXML);
 			void traiterApplyTemplate(Element *elemXLS,Element *elemXML, Element *racineXLS);
