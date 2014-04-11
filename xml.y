@@ -85,7 +85,7 @@ document
  ;
  
  doctypedecl
- : DOCTYPE NOM SUP {$$ = new DocTypeDecl(new string($2), 0, 0); free($2)}
+ : DOCTYPE NOM SUP {$$ = new DocTypeDecl(new string($2), 0, 0); free($2);}
  | DOCTYPE NOM NOM SUP {$$ = new DocTypeDecl(new string($2), new string($3), 0); free($2) ; free($3);}
  | DOCTYPE NOM NOM VALEUR SUP {$$ = new DocTypeDecl(new string($2), new string($3), new string($4)); free($2); free($3) ; free($4);}
  ;
@@ -103,8 +103,8 @@ document
 element
  : INF NOM COLON NOM attributestar SLASH SUP {string * buf = new string($2); buf->append(":"); buf->append($4); $$ = new Element(buf,$5,0); free($2) ; free($4);}
  | INF NOM COLON NOM attributestar SUP content INF SLASH NOM COLON NOM SUP {string * buf = new string($2); buf->append(":"); buf->append($4); $$ = new Element(buf,$5,$7); if(strcmp($2,$10)!=0) {cerr<<"Non matching element namespaces "<<$2<<" and "<<$10<<endl;} if(strcmp($4,$12)!=0) {cerr<<"Non matching element names "<<$4<<" and "<<$12<<endl;}free($2) ; free($4) ; free($10) ; free($12);}  
- | INF NOM attributestar SLASH SUP {$$ = new Element(new string($2),$3,0); free($2)}
- | INF NOM attributestar SUP content INF SLASH NOM SUP {$$ = new Element(new string($2),$3,$5); if(strcmp($2,$8)!=0) {cerr<<"Non matching element names "<<$2<<" and "<<$8<<endl;}free($2) ; free($8)}
+ | INF NOM attributestar SLASH SUP {$$ = new Element(new string($2),$3,0); free($2);}
+ | INF NOM attributestar SUP content INF SLASH NOM SUP {$$ = new Element(new string($2),$3,$5); if(strcmp($2,$8)!=0) {cerr<<"Non matching element names "<<$2<<" and "<<$8<<endl;}free($2) ; free($8);}
  ;
  
  attributestar
