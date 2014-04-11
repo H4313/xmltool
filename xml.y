@@ -87,7 +87,7 @@ document
  doctypedecl
  : DOCTYPE NOM SUP {$$ = new DocTypeDecl(new string($2), 0, 0); free($2)}
  | DOCTYPE NOM NOM SUP {$$ = new DocTypeDecl(new string($2), new string($3), 0); free($2) ; free($3);}
- | DOCTYPE NOM NOM VALEUR SUP {$$ = new DocTypeDecl(new string($2), new string($3), new string($4)); free($2); free($3) ; free($5);}
+ | DOCTYPE NOM NOM VALEUR SUP {$$ = new DocTypeDecl(new string($2), new string($3), new string($4)); free($2); free($3) ; free($4);}
  ;
  
  miscstar
