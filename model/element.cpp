@@ -307,7 +307,6 @@ Element* Element::traiterTemplate(Element* elemXML,Element *racineXLS){
     }
     return el;
  }
-
   //No items
   return new Element(name, attributes, 0);
 

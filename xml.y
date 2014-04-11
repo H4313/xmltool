@@ -97,7 +97,7 @@ document
  
  misc
  : COMMENT {$$ = new Comment(new string($1));}
- | pi {$$ = $1}
+ | pi {$$ = $1;}
  ;
 
 element
@@ -123,9 +123,9 @@ content
  ;
  
  item
- : element {$$ = $1}
- | cdsect {$$ = $1}
- | pi {$$ = $1}
+ : element {$$ = $1;}
+ | cdsect {$$ = $1;}
+ | pi {$$ = $1;}
  | COMMENT {$$ = new Comment(new string($1));}
  | DONNEES {$$ = new Donnees(new string($1));}
  ;
