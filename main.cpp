@@ -58,7 +58,11 @@ int main(int argc, char ** argv)
 				if (!retour)
 				{
 					FILE * fid2 = open("-v",argv[3]);
-					if (!fid2) return 1;
+					if (!fid2) 
+					{
+						delete xml;
+						return 1;
+					}
 					xmlin = fid2;
 					Document * xsd;
 					int retourXsd = xmlparse(&xsd);
@@ -112,7 +116,11 @@ int main(int argc, char ** argv)
 				if (!retour)
 				{
 					FILE * fid2 = open("-t",argv[3]);
-					if (!fid2) return 1;
+					if (!fid2)
+					{
+						delete docXML;
+						return 1;
+					}
 					xmlin = fid2;
 					Document * docXLS;
 					int retourXsd = xmlparse(&docXLS);
@@ -132,9 +140,10 @@ int main(int argc, char ** argv)
 						Element *docTransf = templ->traiterTemplate(racineXML, docXLS->getElement(), racineXML);
 						docTransf->displayResultatTransf();
 						
-					  delete docXML;
-					  delete docXLS;
-					  return 0;
+						delete docTransf;
+						delete docXML;
+						delete docXLS;
+						return 0;
 					}
 					else
 					{
