@@ -1,0 +1,1 @@
+../xmltool -v ../files/personnes5.xml ../files/personnes.xsd

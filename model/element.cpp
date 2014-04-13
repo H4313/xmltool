@@ -119,9 +119,14 @@ string Element::GetRule()
 							&& (attributeMinOccus != NULL || attributeMaxOccus != NULL))
 					{
 						str->append("(<" + attributeRef->GetValue() + ">){"
-								+ ((attributeMinOccus != NULL) ? attributeMinOccus->GetValue() : "0")
+								+ ((attributeMinOccus != NULL) ? attributeMinOccus->GetValue() : "1")
 								+ ","
-								+ ((attributeMaxOccus != NULL) ? attributeMaxOccus->GetValue() : "") + "}"
+								+ ((attributeMaxOccus != NULL)
+										? ((attributeMaxOccus->GetValue().compare("unbounded") != 0)
+												? attributeMaxOccus->GetValue()
+												: ""
+											)
+										: "") + "}"
 								+ (*regexSeparator));
 					}
 				}

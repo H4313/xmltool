@@ -1,0 +1,1 @@
+../xmltool -v ../files/book_mixed.xml ../files/book_not_mixed.xsd
