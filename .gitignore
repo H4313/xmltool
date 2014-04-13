@@ -12,3 +12,11 @@ xml.tab.h
 xml.tab.c
 lex.xml.c
 xmltool.dSYM
+
+# MAC OS X files
+.DS_Store
+
+# Other
+.gitignore
+.project
+org.eclipse.core.resources.prefs
