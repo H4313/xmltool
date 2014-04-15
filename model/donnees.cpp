@@ -13,6 +13,11 @@ Donnees::Donnees(Donnees * d)
 	data = new string(d->GetData());
 }
 
+Donnees * Donnees::clone()
+{
+	return new Donnees(this);
+}
+
 Donnees::~Donnees()
 {
 	if(data) delete data;

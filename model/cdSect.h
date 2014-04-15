@@ -16,6 +16,7 @@ class CDSect : public Item
 	public :
 		CDSect(string * d);
 		CDSect(CDSect * c);
+		CDSect * clone();
 		~CDSect();
 		void display();
 		string getData();

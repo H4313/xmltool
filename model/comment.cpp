@@ -13,6 +13,11 @@ Comment::Comment(Comment * c)
 	comment = new string(c->getComment());
 }
 
+Comment * Comment::clone()
+{
+	return new Comment(this);
+}
+
 Comment::~Comment()
 {
 	if(comment) delete comment;

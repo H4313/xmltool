@@ -21,6 +21,11 @@ PI::PI(PI * p)
 	}
 }
 
+PI * PI::clone()
+{
+	return new PI(this);
+}
+
 PI::~PI()
 {
 	if(target) delete target;

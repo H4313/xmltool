@@ -91,7 +91,7 @@ document
  ;
  
  miscstar
- : miscstar misc {$1->push_back($2); $$ = $1;}
+ : miscstar misc {(*$1)[$1->size()-1] = $2; $$ = $1;}
  | /* vide */ {$$ = new vector<Misc*>();}
  ;
  

@@ -13,6 +13,11 @@ CDSect::CDSect(CDSect * c)
 	data = new string(c->getData());
 }
 
+CDSect * CDSect::clone()
+{
+	return new CDSect(this);
+}
+
 string CDSect::getData()
 {
 	return (*data);
