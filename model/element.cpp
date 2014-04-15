@@ -1,7 +1,7 @@
 #include "document.h"
 #include "element.h"
 #include "attribute.h"
-#include "cdsect.h"
+#include "cdSect.h"
 #include "pi.h"
 #include "item.h"
 #include "comment.h"
