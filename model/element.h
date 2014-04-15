@@ -22,7 +22,7 @@ class Element : public Item
 		
 	public :
 		Element(string * n, vector<Attribute *> * a, vector<Item *> * i);
-		Element(Element e);
+		Element(Element * e);
 		~Element();
 		void display();
 		string GetName();

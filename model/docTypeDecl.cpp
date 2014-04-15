@@ -11,7 +11,7 @@ DocTypeDecl::DocTypeDecl(string * n, string * i, string * d) : name(n), external
 DocTypeDecl::DocTypeDecl(DocTypeDecl * d)
 {
 	name = new string(d->getName());
-	externalID = new string(d->getID());
+	externalID = new string(d->getExternalID());
 	data = new string(d->getData());
 }
 

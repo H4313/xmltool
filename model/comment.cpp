@@ -10,7 +10,7 @@ Comment::Comment(string * c) : comment(c)
 
 Comment::Comment(Comment * c)
 {
-	comment = new string(c->getComment);
+	comment = new string(c->getComment());
 }
 
 Comment::~Comment()

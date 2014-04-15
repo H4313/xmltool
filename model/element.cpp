@@ -1,7 +1,10 @@
 #include "document.h"
 #include "element.h"
 #include "attribute.h"
+#include "cdsect.h"
+#include "pi.h"
 #include "item.h"
+#include "comment.h"
 #include "donnees.h"
 
 #include <string>
@@ -27,7 +30,31 @@ Element::Element(Element * e)
 	vector<Item *> * it = e->getItems();
 	for(int i = 0 ; i < it->size() ; i++)
 	{
-		(*attributes)[i] = new Attribute((*it)[i]);
+		Element* elem = dynamic_cast<Element*>((*items)[i]);
+		CDSect * cd = dynamic_cast<CDSect *>((*items)[i]);
+		Donnees * don = dynamic_cast<Donnees *>((*items)[i]);
+		PI * pi = dynamic_cast<PI *>((*items)[i]);
+		Comment * com = dynamic_cast<Comment *>((*items)[i]);
+		if(elem != 0) 
+		{	 
+			(*items)[i] = new Element(elem);
+		}
+		else if(cd !=0)
+		{
+			(*items)[i] = new CDSect(cd);
+		}
+		else if(don != 0)
+		{
+			(*items)[i] = new Donnees(don);
+		}
+		else if(pi !=0)
+		{
+			(*items)[i] = new PI(pi);
+		}
+		else if(com != 0);
+		{
+			(*items)[i] = new Comment(com);
+		}
 	}
 }
 

@@ -10,7 +10,7 @@ Donnees::Donnees(string * d) : data(d)
 
 Donnees::Donnees(Donnees * d)
 {
-	d = new string(d->GetData);
+	data = new string(d->GetData());
 }
 
 Donnees::~Donnees()
