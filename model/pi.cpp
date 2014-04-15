@@ -17,7 +17,7 @@ PI::PI(PI * p)
 	vector<Attribute *> * a = p->getAttributes();
 	for(int i = 0 ; i < a->size() ; i++)
 	{
-		(*attributes)[i] = new Attribute((*a)[i]);
+		attributes->push_back(new Attribute((*a)[i]));
 	}
 }
 

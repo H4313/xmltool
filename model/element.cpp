@@ -24,13 +24,13 @@ Element::Element(Element * e)
 	vector<Attribute *> * a = e->getAttributes();
 	for(int i = 0 ; i < a->size() ; i++)
 	{
-		(*attributes)[i] = new Attribute((*a)[i]);
+		attributes.push_back(new Attribute((*a)[i]));
 	}
 	items = new vector<Item *>();
 	vector<Item *> * it = e->getItems();
 	for(int i = 0 ; i < it->size() ; i++)
 	{
-		(*items)[i] = (*it)[i]->clone();
+		items.push_back((*it)[i]->clone());
 	}
 }
 
