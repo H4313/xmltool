@@ -108,7 +108,7 @@ element
  ;
  
  attributestar
- : attributestar attribute {$1->push_back($2); $$ = $1;}
+ : attributestar attribute {(*$1)[$1->size()-1] = $2; $$ = $1;}
  | /* vide */ {$$ = new vector<Attribute *>();}
  ;
  
@@ -118,7 +118,7 @@ element
  ;
 
 content
- : content item {$1->push_back($2); $$ = $1;}          
+ : content item {(*$1)[$1->size()-1] = $2; $$ = $1;}          
  | /* vide */ {$$ = new vector<Item *>();}              
  ;
  
