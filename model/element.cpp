@@ -88,6 +88,7 @@ string Element::GetChildrenTag()
 string Element::GetRule()
 {
 	string * str = new string();
+
 	str->append("^(");
 
 	if((this->GetName()).compare("xsd:element") == 0)

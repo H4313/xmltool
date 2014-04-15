@@ -1,6 +1,6 @@
 #include "maintools.h"
 #include <iostream>
-//#include <stdio.h>
+#include <stdio.h>
 //#include <cstring>
 #include <string>
 

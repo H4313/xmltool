@@ -1,7 +1,6 @@
 #ifndef MAINTOOLS_H
 #define MAINTOOLS_H
 
-//#include <stdio.h>
 #include <string>
 
 using namespace std;
