@@ -10,6 +10,17 @@ using namespace std;
 PI::PI(string * t, vector<Attribute *> * a) : target(t), attributes(a)
 {}
 
+PI::PI(PI * p)
+{
+	target = new string(p->getTarget());
+	attributes = new vector<Attribute *>();
+	vector<Attribute *> * a = p->getAttributes();
+	for(int i = 0 ; i < a->size() ; i++)
+	{
+		(*attributes)[i] = new Attribute((*a)[i]);
+	}
+}
+
 PI::~PI()
 {
 	if(target) delete target;
@@ -37,4 +48,14 @@ void PI::display()
 		}
 		cout<<" ?>"<<endl;
 	}
+}
+
+string PI::getTarget()
+{
+	return (*target);
+}
+
+vector<Attribute *> * PI::getAttributes()
+{
+	return attributes;
 }

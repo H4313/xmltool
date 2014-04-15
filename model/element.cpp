@@ -14,6 +14,23 @@ using namespace std;
 Element::Element(string * n, vector<Attribute *> * a, vector<Item *> * i) : name(n), attributes(a), items(i)
 {}
 
+Element::Element(Element * e)
+{
+	name = new string(e->GetName());
+	attributes = new vector<Attribute *>();
+	vector<Attribute *> * a = e->getAttributes();
+	for(int i = 0 ; i < a->size() ; i++)
+	{
+		(*attributes)[i] = new Attribute((*a)[i]);
+	}
+	items = new vector<Item *>();
+	vector<Item *> * it = e->getItems();
+	for(int i = 0 ; i < it->size() ; i++)
+	{
+		(*attributes)[i] = new Attribute((*it)[i]);
+	}
+}
+
 Element::~Element()
 {
 	if(name) delete name;
@@ -432,4 +449,14 @@ void Element::traiterResultat(Element *res)
 	{ 	
 		items->push_back(res);
 	}	
+}
+
+vector<Attribute *> * Element::getAttributes()
+{
+	return attributes;
+}
+
+vector<Item *> * Element::getItems()
+{
+	return items;
 }

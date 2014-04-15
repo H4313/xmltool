@@ -22,10 +22,13 @@ class Element : public Item
 		
 	public :
 		Element(string * n, vector<Attribute *> * a, vector<Item *> * i);
+		Element(Element e);
 		~Element();
 		void display();
 		string GetName();
 		string GetValue();
+		vector<Attribute *> * getAttributes();
+		vector<Item *> * getItems();
 		vector<Element *> * GetChildren();
 		Attribute * GetAttributeByName(string name);
 		vector<Item *> * GetItems();
