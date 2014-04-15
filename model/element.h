@@ -34,6 +34,8 @@ class Element : public Item
 		string GetChildrenTag();
 		// Element doit etre un element XSD
 		string GetRule();
+		string GetXsdComplexTypeRule(Element * complexType);
+		string GetXsdElementRule(Element * element, string * regexSeparator);
 
 		/*  Transformation de l'arbre */
 		//traiter le template sur un element XML recu en entree

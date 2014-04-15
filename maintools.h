@@ -1,9 +1,12 @@
 #ifndef MAINTOOLS_H
 #define MAINTOOLS_H
 
-#include <stdio.h>
+//#include <stdio.h>
+#include <string>
+
+using namespace std;
 
 void displayHelp();
-FILE * open(char* param,char* fileName);
+FILE * open(string param, string fileName);
 
 #endif

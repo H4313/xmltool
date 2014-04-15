@@ -1,0 +1,1 @@
+../xmltool -v ../files/personnesTypeDecimalBad.xml ../files/personnesTypeDecimal.xsd

@@ -1,0 +1,1 @@
+../xmltool -v ../files/personnesTypeIntBad.xml ../files/personnesTypeInt.xsd

@@ -1,7 +1,8 @@
 #include "maintools.h"
 #include <iostream>
-#include <stdio.h>
-#include <cstring>
+//#include <stdio.h>
+//#include <cstring>
+#include <string>
 
 using namespace std;
 
@@ -13,11 +14,11 @@ void displayHelp(){
 	cerr<<"../xmltool -h : displays this help"<<endl;
 }
 
-FILE * open(char* param, char* fileName){
-	FILE * fid = fopen(fileName,"r");
+FILE * open(string param, string fileName){
+	FILE * fid = fopen(fileName.c_str(),"r");
 	if (!fid)
 	{
-		if (strcmp(param,"-v")==0 || strcmp(param,"-t")==0){
+		if (param.compare("-v")==0 || param.compare("-t")==0){
 			cerr<<"Unable to open file "<<fileName<<endl;
 		}
 		else{

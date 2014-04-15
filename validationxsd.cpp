@@ -51,21 +51,6 @@ bool ValidationXSD::validation(Element * element)
 		}
 	}
 
-	// C++ REGEX
-//	map<string,string>::iterator eltRegex = this->validator->find(element->GetName());
-//	if(eltRegex != this->validator->end())
-//	{
-//		regex exp(eltRegex->second);
-////		cout << element->GetName() << eltRegex->second
-////				<< "\n" << regex_match(element->GetChildrenTag(), exp)
-////				<< "\n" << element->GetChildrenTag() << endl;
-//
-//		if(!regex_match(element->GetChildrenTag(), exp))
-//		{
-//			return false;
-//		}
-//	}
-
     // For each children
     bool childIsValid = true;
     vector<Element *> * children = element->GetChildren();
@@ -74,11 +59,11 @@ bool ValidationXSD::validation(Element * element)
 		childIsValid = this->validation((*children)[i]);
 		if(!childIsValid)
 		{
-			delete children;
+			//delete children;
 			return false;
 		}
 	}
-	delete children;
+	//delete children;
 
 	return true;
 }

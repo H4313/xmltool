@@ -63,90 +63,141 @@ string Element::GetChildrenTag()
 string Element::GetRule()
 {
 	string * str = new string();
+	str->append("^(");
+
 	if((this->GetName()).compare("xsd:element") == 0)
 	{
-		vector<Element *> * xsdTypes = this->GetChildren();
-		if(xsdTypes->size() == 1
-				&& (*xsdTypes)[0]->GetName().compare("xsd:complexType") == 0)
-		{
-			Element * xsdType = (*xsdTypes)[0];
-			vector<Element *> * xsdRulesTypes = xsdType->GetChildren();
-			if(xsdRulesTypes->size() == 1)
-			{
-				Element * xsdRuleType = (*xsdRulesTypes)[0];
-				string * regexSeparator = new string();
-				if(xsdRuleType->GetName().compare("xsd:choice") == 0)
-				{
-					regexSeparator->append("|");
-				}
-				else if(xsdRuleType->GetName().compare("xsd:sequence") == 0)
-				{
-					regexSeparator->append("");
-				}
-				else
-				{
-					cerr << "Wrong XSD syntax 3" << endl;
-				}
-
-				str->append("^(");
-				Attribute * attributeName = NULL;
-				Attribute * attributeType = NULL;
-				Attribute * attributeRef = NULL;
-				Attribute * attributeMaxOccus = NULL;
-				Attribute * attributeMinOccus = NULL;
-				vector<Element *> * xsdRules = xsdRuleType->GetChildren();
-				for(int i = xsdRules->size()-1 ; i >= 0; i--)
-				{
-					attributeName = (*xsdRules)[i]->GetAttributeByName("name");
-					attributeType = (*xsdRules)[i]->GetAttributeByName("type");
-					attributeRef = (*xsdRules)[i]->GetAttributeByName("ref");
-					attributeMaxOccus = (*xsdRules)[i]->GetAttributeByName("maxOccurs");
-					attributeMinOccus = (*xsdRules)[i]->GetAttributeByName("minOccurs");
-					if(attributeName != NULL && attributeType != NULL)
-					{
-						str->append("((<" + attributeName->GetValue() + ">)|");
-						if((attributeType->GetValue()).compare("xsd:string") == 0)
-						{
-							str->append("((<" + attributeName->GetValue() + ">).*(<\\/" + attributeName->GetValue() + ">)))");
-						}
-						else if((attributeType->GetValue()).compare("xsd:date") == 0)
-						{
-							str->append("((<" + attributeName->GetValue() + ">)[0-9]{4}-[0-9]{2}-[0-9]{2}(<\\/" + attributeName->GetValue() + ">)))");
-						}
-						str->append((*regexSeparator));
-					}
-					else if(attributeRef != NULL
-							&& (attributeMinOccus != NULL || attributeMaxOccus != NULL))
-					{
-						str->append("(<" + attributeRef->GetValue() + ">){"
-								+ ((attributeMinOccus != NULL) ? attributeMinOccus->GetValue() : "1")
-								+ ","
-								+ ((attributeMaxOccus != NULL)
-										? ((attributeMaxOccus->GetValue().compare("unbounded") != 0)
-												? attributeMaxOccus->GetValue()
-												: ""
-											)
-										: "") + "}"
-								+ (*regexSeparator));
-					}
-				}
-				delete xsdRules;
-				if(regexSeparator->length() > 0) str->erase(str->length()-1, 1);
-				str->append(")$");
-			}
-			else
-			{
-				cerr << "Wrong XSD syntax 2" << endl;
-			}
-		}
-		else
-		{
-			cerr << "Wrong XSD syntax 1" << endl;
-		}
+		str->append(this->GetXsdElementRule(this, new string("")));
+	}
+	else if((this->GetName()).compare("xsd:complexType") == 0)
+	{
+		str->append(this->GetXsdComplexTypeRule(this));
 	}
 	else
 	{
 		cerr << "Element is not a xsd element" << endl;
+	}
+
+	str->append(")$");
+
+	return (*str);
+}
+
+string Element::GetXsdElementRule(Element * element, string * regexSeparator)
+{
+	string * str = new string();
+	vector<Element *> * xsdChildren = element->GetChildren();
+//	cout << xsdChildren->size() << " " << element->GetName() << " = "
+//			<< ((element->GetAttributeByName("name") != NULL) ? element->GetAttributeByName("name")->GetValue() : "") << endl;
+
+	if(xsdChildren->size() > 0)
+	{
+		for(int i = 0 ; i < xsdChildren->size(); i++)
+		{
+			if((*xsdChildren)[i]->GetName().compare("xsd:complexType") == 0)
+			{
+				str->append(this->GetXsdComplexTypeRule((*xsdChildren)[i]));
+			}
+			else
+			{
+				cerr << "Fils de element inconnu : " << (*xsdChildren)[i]->GetName() << endl;
+			}
+		}
+	}
+	else
+	{
+		Attribute * attributeName = element->GetAttributeByName("name");
+		Attribute * attributeType = element->GetAttributeByName("type");
+		Attribute * attributeRef = element->GetAttributeByName("ref");
+		Attribute * attributeMaxOccus = element->GetAttributeByName("maxOccurs");
+		Attribute * attributeMinOccus = element->GetAttributeByName("minOccurs");
+
+		if(attributeName != NULL && attributeType != NULL)
+		{
+			str->append("((<" + attributeName->GetValue() + ">)|");
+			if((attributeType->GetValue()).compare("xsd:string") == 0)
+			{
+				str->append("((<" + attributeName->GetValue() + ">).*(<\\/" + attributeName->GetValue() + ">)))");
+			}
+			else if((attributeType->GetValue()).compare("xsd:int") == 0)
+			{
+				str->append("((<" + attributeName->GetValue() + ">)(\\+|\\-)?[0-9]*(<\\/" + attributeName->GetValue() + ">)))");
+			}
+			else if((attributeType->GetValue()).compare("xsd:decimal") == 0)
+			{
+				str->append("((<" + attributeName->GetValue() + ">)(\\+|\\-)?[0-9]*((\\.|\\,)[0-9]+)?(<\\/" + attributeName->GetValue() + ">)))");
+			}
+			else if((attributeType->GetValue()).compare("xsd:date") == 0)
+			{
+				str->append("((<" + attributeName->GetValue() + ">)[0-9]{4}-[0-9]{2}-[0-9]{2}(<\\/" + attributeName->GetValue() + ">)))");
+			}
+			str->append((*regexSeparator));
+		}
+		else if(attributeRef != NULL
+				&& (attributeMinOccus != NULL || attributeMaxOccus != NULL))
+		{
+			str->append("(<" + attributeRef->GetValue() + ">){"
+					+ ((attributeMinOccus != NULL) ? attributeMinOccus->GetValue() : "1")
+					+ ","
+					+ ((attributeMaxOccus != NULL)
+							? ((attributeMaxOccus->GetValue().compare("unbounded") != 0)
+									? attributeMaxOccus->GetValue()
+									: ""
+								)
+							: "") + "}"
+					+ (*regexSeparator));
+		}
+	}
+
+	return (*str);
+}
+
+string Element::GetXsdComplexTypeRule(Element * complexType)
+{
+	string * str = new string();
+
+	if(complexType->GetName().compare("xsd:complexType") == 0)
+	{
+		vector<Element *> * xsdRulesTypes = complexType->GetChildren();
+		if(xsdRulesTypes->size() == 1)
+		{
+			Element * xsdRuleType = (*xsdRulesTypes)[0];
+			string * regexSeparator = new string();
+			if(xsdRuleType->GetName().compare("xsd:choice") == 0)
+			{
+				regexSeparator->append("|");
+			}
+			else if(xsdRuleType->GetName().compare("xsd:sequence") == 0)
+			{
+				regexSeparator->append("");
+			}
+			else
+			{
+				cerr << "Wrong XSD syntax 3" << endl;
+			}
+
+			vector<Element *> * xsdRules = xsdRuleType->GetChildren();
+			for(int i = 0 ; i < xsdRules->size(); i++)
+			{
+				if((*xsdRules)[i]->GetName().compare("xsd:complexType") == 0)
+				{
+					str->append(this->GetXsdComplexTypeRule((*xsdRules)[i]));
+				}
+				else if((*xsdRules)[i]->GetName().compare("xsd:element") == 0)
+				{
+					str->append(this->GetXsdElementRule((*xsdRules)[i], regexSeparator));
+				}
+			}
+			if(regexSeparator->length() > 0) str->erase(str->length()-1, 1);
+		}
+		else
+		{
+			cerr << "Wrong XSD syntax 2" << endl;
+		}
+	}
+	else
+	{
+		cerr << "Wrong XSD syntax 1" << endl;
 	}
 
 	return (*str);
@@ -155,11 +206,14 @@ string Element::GetRule()
 vector<Element *> * Element::GetChildren()
 {
 	vector<Element *> * children = new vector<Element *>();
-	for(int i = 0 ; i < items->size() ; i++)
+	if(items != NULL)
 	{
-		if( typeid((*(*items)[i])) == typeid(Element) )
+		for(int i = 0 ; i < items->size() ; i++)
 		{
-			children->insert(children->begin(), dynamic_cast<Element*>((*items)[i]));
+			if( typeid((*(*items)[i])) == typeid(Element) )
+			{
+				children->push_back(dynamic_cast<Element*>((*items)[i]));
+			}
 		}
 	}
 

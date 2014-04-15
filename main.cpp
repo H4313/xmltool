@@ -82,6 +82,7 @@ int main(int argc, char ** argv)
 						}
 						cout << argv[3] << endl;
 
+						delete validationXSD;
 						delete xml;
 						delete xsd;
 						return 0;
