@@ -91,7 +91,7 @@ document
  ;
  
  miscstar
- : miscstar misc {$1->push_back($2); $$ = $1;}
+ : miscstar misc {$1->insert($1->end(),$2); $$ = $1;}
  | /* vide */ {$$ = new vector<Misc*>();}
  ;
  
@@ -108,7 +108,7 @@ element
  ;
  
  attributestar
- : attributestar attribute {$1->push_back($2); $$ = $1;}
+ : attributestar attribute {$1->insert($1->end(),$2); $$ = $1;}
  | /* vide */ {$$ = new vector<Attribute *>();}
  ;
  
@@ -118,7 +118,7 @@ element
  ;
 
 content
- : content item {$1->push_back($2); $$ = $1;}          
+ : content item {$1->insert($1->end(),$2); $$ = $1;}          
  | /* vide */ {$$ = new vector<Item *>();}              
  ;
  

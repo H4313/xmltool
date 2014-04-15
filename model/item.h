@@ -10,6 +10,7 @@ class Item
 {
 	public :
 		virtual void display() = 0;
+		virtual Item * clone() = 0;
 		virtual ~Item() {};
 };
 

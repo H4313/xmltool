@@ -14,6 +14,7 @@ class Attribute
 		
 	public :
 		Attribute(string * n, string * v);
+		Attribute(Attribute * a);
 		~Attribute();
 		string GetName();
 		string GetValue();

@@ -8,6 +8,12 @@ using namespace std;
 Attribute::Attribute(string * n, string *  v) : name(n), value(v)
 {}
 
+Attribute::Attribute(Attribute * a)
+{
+	name = new string(a->GetName());
+	value = new string(a->GetValue());
+}
+
 Attribute::~Attribute()
 {
 	if(name) delete name;

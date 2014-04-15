@@ -15,6 +15,8 @@ class Donnees : public Item
 	
 	public :
 		Donnees(string * d);
+		Donnees(Donnees * d);
+		Donnees * clone();
 		~Donnees();
 		void display();
 		string GetData();

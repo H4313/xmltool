@@ -10,6 +10,7 @@ using namespace std;
 class Misc : public Item
 {
 	public :
+		virtual Misc * clone() = 0;
 		virtual void display() = 0;
 		virtual ~Misc() {};
 };

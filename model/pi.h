@@ -18,8 +18,12 @@ class PI : public Misc
 		
 	public :
 		PI(string * t, vector<Attribute *> * a);
+		PI(PI * p);
+		PI * clone();
 		~PI();
 		void display();
+		string getTarget();
+		vector<Attribute *> * getAttributes();
 };
 
 #endif

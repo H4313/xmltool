@@ -15,8 +15,12 @@ class DocTypeDecl
 		
 	public :
 		DocTypeDecl(string * n, string * i, string * d);
+		DocTypeDecl(DocTypeDecl * d);
 		~DocTypeDecl();
 		void display();
+		string getName();
+		string getExternalID();
+		string getData();
 };
 
 #endif
