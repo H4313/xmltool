@@ -21,7 +21,7 @@ class Document
 	public :
 		Document(Prolog * p, Element * e, vector<Misc *> * m);
 		~Document();
-		map<string, string> * GetValidator();
+		map<string, string> * GetValidator(map<string, string> * validationMap);
 		void display();
 		Element* getElement()
 		{

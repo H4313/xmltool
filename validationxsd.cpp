@@ -11,13 +11,16 @@ ValidationXSD::ValidationXSD(Document * xml, Document * xsd)
 {
 	this->xmlIsValid = false;
 
-	this->validator = xsd->GetValidator();
+	this->validator = new map<string, string>();
+
+	this->validator = xsd->GetValidator(this->validator);
 
 	this->xmlIsValid = this->validation(xml->getElement());
 }
 
 ValidationXSD::~ValidationXSD()
 {
+	delete this->validator;
 }
 
 bool ValidationXSD::validation(Element * element)
@@ -37,7 +40,9 @@ bool ValidationXSD::validation(Element * element)
 		}
 
 		// Execute regular expression
-		reti = regexec(&regex, element->GetChildrenTag().c_str(), 0, NULL, 0);
+		string * str = new string();
+		reti = regexec(&regex, element->GetChildrenTag(str).c_str(), 0, NULL, 0);
+		delete str;
 		regfree(&regex);
 
 //		cout << element->GetName() << ":" << eltRegex->second
@@ -53,17 +58,18 @@ bool ValidationXSD::validation(Element * element)
 
     // For each children
     bool childIsValid = true;
-    vector<Element *> * children = element->GetChildren();
+    vector<Element *> * children = new vector<Element *>();
+    children = element->GetChildren(children);
 	for(int i = 0 ; i < children->size() ; i++)
 	{
 		childIsValid = this->validation((*children)[i]);
 		if(!childIsValid)
 		{
-			//delete children;
+			delete children;
 			return false;
 		}
 	}
-	//delete children;
+	delete children;
 
 	return true;
 }

@@ -1,1 +1,0 @@
-../xmltool -v ../files/order_attribute.xml ../files/order_attribute.xsd

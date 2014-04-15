@@ -30,16 +30,16 @@ class Element : public Item
 		string GetValue();
 		vector<Attribute *> * getAttributes();
 		vector<Item *> * getItems();
-		vector<Element *> * GetChildren();
+		vector<Element *> * GetChildren(vector<Element *> * children);
 		Attribute * GetAttributeByName(string name);
 		vector<Item *> * GetItems();
 
 		// Validation XSD
-		string GetChildrenTag();
+		string GetChildrenTag(string * str);
 		// Element doit etre un element XSD
-		string GetRule();
-		string GetXsdComplexTypeRule(Element * complexType);
-		string GetXsdElementRule(Element * element, string * regexSeparator);
+		string GetRule(string * str);
+		string GetXsdComplexTypeRule(Element * complexType, string * str);
+		string GetXsdElementRule(Element * element, string * regexSeparator, string * str);
 
 		/*  Transformation de l'arbre */
 		//traiter le template sur un element XML recu en entree
