@@ -27,7 +27,7 @@ class Element : public Item
 		~Element();
 		void display();
 		string GetName();
-		string GetValue();
+		string * GetValue();
 		vector<Attribute *> * getAttributes();
 		vector<Item *> * getItems();
 		vector<Element *> * GetChildren(vector<Element *> * children);
@@ -39,7 +39,7 @@ class Element : public Item
 		// Element doit etre un element XSD
 		string GetRule(string * str);
 		string GetXsdComplexTypeRule(Element * complexType, string * str);
-		string GetXsdElementRule(Element * element, string * regexSeparator, string * str);
+		string GetXsdElementRule(Element * element, string * regexSeparator, string * str, bool getChildren);
 
 		/*  Transformation de l'arbre */
 		//traiter le template sur un element XML recu en entree

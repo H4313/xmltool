@@ -10,7 +10,7 @@ Donnees::Donnees(string * d) : data(d)
 
 Donnees::Donnees(Donnees * d)
 {
-	data = new string(d->GetData());
+	data = new string(*d->GetData());
 }
 
 Donnees * Donnees::clone()
@@ -29,7 +29,7 @@ void Donnees::display()
 		cout<<*data;
 }
 
-string Donnees::GetData()
+string * Donnees::GetData()
 {
-	return (*data);
+	return data;
 }

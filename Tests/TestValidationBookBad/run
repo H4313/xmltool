@@ -1,0 +1,1 @@
+../xmltool -v ../files/book_bad.xml ../files/book.xsd

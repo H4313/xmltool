@@ -13,7 +13,7 @@ ValidationXSD::ValidationXSD(Document * xml, Document * xsd)
 
 	this->validator = new map<string, string>();
 
-	this->validator = xsd->GetValidator(this->validator);
+	this->validator = xsd->GetValidator(xsd->getElement(), this->validator);
 
 	this->xmlIsValid = this->validation(xml->getElement());
 }
@@ -45,9 +45,11 @@ bool ValidationXSD::validation(Element * element)
 		delete str;
 		regfree(&regex);
 
+//		string * str2 = new string();
 //		cout << element->GetName() << ":" << eltRegex->second
 //				<< "\nMatch : " << reti
-//				<< "\n" << element->GetChildrenTag() << endl;
+//				<< "\n" << element->GetChildrenTag(str2)  << "\n" << endl;
+//		delete str2;
 
 		if( reti != 0 )
 		{

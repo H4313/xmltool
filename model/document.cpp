@@ -26,22 +26,29 @@ Document::~Document()
 }
 
 // XSD
-map<string, string> * Document::GetValidator(map<string, string> * validationMap)
+map<string, string> * Document::GetValidator(Element * element, map<string, string> * validationMap)
 {
-	if((this->element->GetName()).compare("xsd:schema") == 0)
+	if(element != this->element
+			|| (this->element->GetName()).compare("xsd:schema") == 0)
 	{
 		vector<Element *> * rules = new vector<Element *>();
-		rules = this->element->GetChildren(rules);
+		rules = element->GetChildren(rules);
 		for(int i = 0 ; i < rules->size() ; i++)
 		{
-			string * str = new string();
-			validationMap->insert (
-					pair<string,string>(
-							((*rules)[i])->GetAttributeByName("name")->GetValue(),
-							((*rules)[i])->GetRule(str)
-					)
-			);
-			delete str;
+			if(((*rules)[i]->GetName()).compare("xsd:element") == 0
+					&& ((*rules)[i])->GetAttributeByName("name") != NULL)
+			{
+				string * str = new string();
+				validationMap->insert (
+						pair<string,string>(
+								((*rules)[i])->GetAttributeByName("name")->GetValue(),
+								((*rules)[i])->GetRule(str)
+						)
+				);
+				delete str;
+			}
+
+			validationMap = this->GetValidator((*rules)[i], validationMap);
 		}
 		delete rules;
 	}

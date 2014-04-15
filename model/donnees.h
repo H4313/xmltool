@@ -19,7 +19,7 @@ class Donnees : public Item
 		Donnees * clone();
 		~Donnees();
 		void display();
-		string GetData();
+		string * GetData();
 };
 
 #endif
