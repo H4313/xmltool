@@ -20,10 +20,10 @@ Element::Element(string * n, vector<Attribute *> * a, vector<Item *> * i) : name
 Element::Element(Element * e)
 {
 	name = new string(e->GetName());
-	attributes = new vector<Attribute *>();
 	vector<Attribute *> * a = e->getAttributes();
 	if(a)
-	{
+	{	
+		attributes = new vector<Attribute *>();
 		for(int i = 0 ; i < a->size() ; i++)
 		{
 			attributes->push_back(new Attribute((*a)[i]));
@@ -31,11 +31,11 @@ Element::Element(Element * e)
 	}else
 	{
 		attributes = 0;
-	}
-	items = new vector<Item *>();
+	}	
 	vector<Item *> * it = e->getItems();
 	if(it) //else : segmentation fault
-	{
+	{	
+		items = new vector<Item *>();
 		for(int i = 0 ; i < it->size() ; i++)
 		{
 			items->push_back((*it)[i]->clone());
@@ -542,15 +542,16 @@ void Element::traiterResultat(Element *res)
 			for(int resIt = 0 ; resIt < res->items->size() ; resIt++)
 			{
 				if((*res->items)[resIt]) 
-				{
-					addChild((*res->items)[resIt]->clone());
+				{	
+					Item *t =(*res->items)[resIt]; 
+					addChild(t->clone());
 				}
 			}
 		}
 		delete res;
 	}else
 	{ 	
-		items->push_back(res);
+		addChild(res);
 	}	
 }
 
