@@ -143,6 +143,7 @@ int main(int argc, char ** argv)
 						
 						delete docXML;
 						delete docXLS;
+						delete docTransf;
 						return 0;
 					}
 					else

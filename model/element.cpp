@@ -22,20 +22,49 @@ Element::Element(Element * e)
 	name = new string(e->GetName());
 	attributes = new vector<Attribute *>();
 	vector<Attribute *> * a = e->getAttributes();
-	for(int i = 0 ; i < a->size() ; i++)
+	if(a)
 	{
-		attributes->push_back(new Attribute((*a)[i]));
+		for(int i = 0 ; i < a->size() ; i++)
+		{
+			attributes->push_back(new Attribute((*a)[i]));
+		}
+	}else
+	{
+		attributes = 0;
 	}
 	items = new vector<Item *>();
 	vector<Item *> * it = e->getItems();
-	for(int i = 0 ; i < it->size() ; i++)
+	if(it) //else : segmentation fault
 	{
-		items->push_back((*it)[i]->clone());
+		for(int i = 0 ; i < it->size() ; i++)
+		{
+			items->push_back((*it)[i]->clone());
+		}
+	}else
+	{
+		items = 0;
 	}
 }
 
-Element * Element::clone()
+Element::Element(string * n, vector<Attribute *> * a)
 {
+	name = new string(*n);
+	if(a)
+	{
+		attributes = new vector<Attribute *>();
+		for(int i = 0 ; i < a->size() ; i++)
+		{
+			attributes->push_back(new Attribute((*a)[i]));
+		}
+	}else
+	{
+		attributes = 0;
+	}
+	items = new vector<Item *>();
+}
+
+Element * Element::clone()
+{	
 	return new Element(this);
 }
 
@@ -359,11 +388,9 @@ Element* Element::getTemplateMatching(string* matchName)
 				if(elem != 0) //is an element
 				{ 	
 					string *matchAtrValue = elem->getAttributeValue("match");
-					//cout <<"compare" << *matchAtrValue <<"ET"<<*matchName;
 					if ((*matchAtrValue).compare(*matchName) == 0){
-						//cout << ": true" << endl;
 						return elem;					
-					}//else cout << ": false" << endl;
+					}
 				}
 			} 
 		}
@@ -378,8 +405,7 @@ Element* Element::traiterTemplate(Element* elemXML,Element *racineXLS, Element *
 
  if(items)
  { 
-    vector<Item *> * newChildren = new std::vector<Item *>();
-    Element *el = new Element(name, attributes, newChildren);	 
+    Element *el = new Element(name, attributes);	 
     for(int i = 0 ; i < items->size() ; i++)
     {
 		if((*items)[i])
@@ -405,15 +431,14 @@ Element* Element::traiterTemplate(Element* elemXML,Element *racineXLS, Element *
 						}
 			}else
 			{  // n'est pas element 
-				newChildren->push_back((*items)[i]); 
+				el->addChild((*items)[i]->clone()); 
 			}
 		} 
     }
     return el;
  }
   //No items
-  return new Element(name, attributes, 0);
-
+  return this->clone();
 }
 
 /* Methode pour traiter le cas for-each */
@@ -471,7 +496,6 @@ void Element::traiterApplyTemplate(Element *elemXLS,Element *elemXML, Element *r
 				if(templ != 0) //2.traiter le template sur l'enfant
 				{
 					Element *res = templ->traiterTemplate(childElemXML,racineXLS, racineXML);
-					// cout << *name << " push_back " << *(res->name) <<endl;
 					traiterResultat(res);	
 				}
 			} 
@@ -485,7 +509,7 @@ void Element::traiterValueOf(Element *elemXLS,Element *elemXML)
 	string* selectOptVal = elemXLS->getAttributeValue("select");
 	if((*selectOptVal).compare(".") == 0)
 	{
-		items->push_back((*(elemXML->items))[0]);
+		addChild((*(elemXML->items))[0]->clone()); 
 	}else
 	{ //recherche de l'element parmi les items
 		if(elemXML->items)
@@ -498,7 +522,7 @@ void Element::traiterValueOf(Element *elemXLS,Element *elemXML)
 					Element* elCh = dynamic_cast<Element*>(it);
 					if(elCh && (*(elCh->name)).compare(*selectOptVal) == 0)
 					{ 
-						items->push_back((*(elCh->items))[0]);
+						addChild((*(elCh->items))[0]->clone());
 						break;
 					}
 				}
@@ -519,11 +543,11 @@ void Element::traiterResultat(Element *res)
 			{
 				if((*res->items)[resIt]) 
 				{
-					items->push_back((*res->items)[resIt]);
+					addChild((*res->items)[resIt]->clone());
 				}
 			}
 		}
-		//delete res;
+		delete res;
 	}else
 	{ 	
 		items->push_back(res);

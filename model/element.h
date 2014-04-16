@@ -23,6 +23,7 @@ class Element : public Item
 	public :
 		Element(string * n, vector<Attribute *> * a, vector<Item *> * i);
 		Element(Element * e);
+		Element(string * n, vector<Attribute *> * a);
 		Element * clone();
 		~Element();
 		void display();
@@ -52,6 +53,9 @@ class Element : public Item
 			void traiterValueOf(Element *elemXLS,Element *elemXML);
 			void traiterApplyTemplate(Element *elemXLS,Element *elemXML, Element *racineXLS, Element *racineXML);
 			void traiterForEach(string chemin,Element *elemXLS,Element *elemXML, Element *racineXLS, Element *racineXML);
+			void addChild(Item *it){
+				items->push_back(it);
+			}
 		public: 
 			void displayResultatTransf(){
 				(*items)[0]->display();
