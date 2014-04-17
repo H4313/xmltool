@@ -174,19 +174,19 @@ string Element::GetXsdElementRule(Element * element, string * regexSeparator, st
 		{
 			if((attributeType->GetValue()).compare("xsd:string") == 0)
 			{
-				str->append("(.*)");
+				str->append(".*");
 			}
 			else if((attributeType->GetValue()).compare("xsd:int") == 0)
 			{
-				str->append("((\\+|\\-)?[0-9]*)");
+				str->append("(\\+|\\-)?[0-9]*");
 			}
 			else if((attributeType->GetValue()).compare("xsd:decimal") == 0)
 			{
-				str->append("((\\+|\\-)?[0-9]*((\\.|\\,)[0-9]+)?)");
+				str->append("(\\+|\\-)?[0-9]*((\\.|\\,)[0-9]+)?");
 			}
 			else if((attributeType->GetValue()).compare("xsd:date") == 0)
 			{
-				str->append("([0-9]{4}-[0-9]{2}-[0-9]{2})");
+				str->append("[0-9]{4}-[0-9]{2}-[0-9]{2}");
 			}
 			str->append((*regexSeparator));
 		}
