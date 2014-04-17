@@ -148,8 +148,9 @@ string Element::GetXsdElementRule(Element * element, string * regexSeparator, st
 
 	if(xsdChildren->size() > 0 && getChildren)
 	{
-		for(int i = 0 ; i < xsdChildren->size(); i++)
-		{
+//		for(int i = 0 ; i < xsdChildren->size(); i++)
+//		{
+			int i = 0;
 			if((*xsdChildren)[i]->GetName().compare("xsd:complexType") == 0)
 			{
 				string * rule = new string();
@@ -158,9 +159,9 @@ string Element::GetXsdElementRule(Element * element, string * regexSeparator, st
 			}
 			else
 			{
-				cerr << "Fils de element inconnu : " << (*xsdChildren)[i]->GetName() << endl;
+				cerr << "Le fils de element inconnu : " << (*xsdChildren)[i]->GetName() << endl;
 			}
-		}
+//		}
 	}
 	else
 	{
