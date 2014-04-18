@@ -89,7 +89,9 @@ Element::~Element()
 	}
 }
 
-/// Validation XSD ///
+/***
+ * Récuperer la représentation simplifiée des fils
+ */
 string Element::GetChildrenTag(	string * str )
 {
 	if(this->GetValue() != NULL)
@@ -110,7 +112,9 @@ string Element::GetChildrenTag(	string * str )
 	return (*str);
 }
 
-// Element doit etre un element XSD
+/***
+ * Récupérer la règle (regex) d'un élément (pour ses fils)
+ */
 string Element::GetRule(string * str)
 {
 	str->append("^(");
@@ -123,12 +127,6 @@ string Element::GetRule(string * str)
 		delete eltrule;
 		delete regexSeparator;
 	}
-	else if((this->GetName()).compare("xsd:complexType") == 0)
-	{
-		string * complexrule = new string();
-		str->append(this->GetXsdComplexTypeRule(this, complexrule));
-		delete complexrule;
-	}
 	else
 	{
 		cerr << "Element is not a xsd element" << endl;
@@ -139,12 +137,13 @@ string Element::GetRule(string * str)
 	return (*str);
 }
 
+/***
+ * Traitement d'un item XSD de type xsd:element
+ */
 string Element::GetXsdElementRule(Element * element, string * regexSeparator, string * str, bool getChildren)
 {
 	vector<Element *> * xsdChildren = new vector<Element *>();
 	xsdChildren = element->GetChildren(xsdChildren);
-//	cout << xsdChildren->size() << " " << element->GetName() << " = "
-//			<< ((element->GetAttributeByName("name") != NULL) ? element->GetAttributeByName("name")->GetValue() : "") << endl;
 
 	if(xsdChildren->size() > 0 && getChildren)
 	{
@@ -217,6 +216,9 @@ string Element::GetXsdElementRule(Element * element, string * regexSeparator, st
 	return (*str);
 }
 
+/***
+ * Traitement d'un item de type xsd:complextype
+ */
 string Element::GetXsdComplexTypeRule(Element * complexType, string * str)
 {
 	if(complexType->GetName().compare("xsd:complexType") == 0)
@@ -274,6 +276,9 @@ string Element::GetXsdComplexTypeRule(Element * complexType, string * str)
 	return (*str);
 }
 
+/***
+ * Récupérer les fils qui sont des Element
+ */
 vector<Element *> * Element::GetChildren(vector<Element *> * children)
 {
 	if(items != NULL)
@@ -290,6 +295,9 @@ vector<Element *> * Element::GetChildren(vector<Element *> * children)
 	return children;
 }
 
+/***
+ * Récupérer l'attribut de l'élément courant à partir de son nom
+ */
 Attribute * Element::GetAttributeByName(string name)
 {
 	Attribute * attribute = NULL;
@@ -321,6 +329,10 @@ string Element::GetName()
 	return (*name);
 }
 
+/***
+ * Récupérer la valeur de la donnée de l'élément courant.
+ * Si l'élément courant n'est pas une feuille, retourne NULL.
+ */
 string * Element::GetValue()
 {
 	string * str = NULL;

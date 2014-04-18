@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-    <xs:element name="Order">
-	    <xs:complexType>
-	    	<xs:attribute name="OrderID" type="xsd:int" use="required" />
-	    </xs:complexType>
-    </xs:element>
-</xsd:schema>

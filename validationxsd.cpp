@@ -23,6 +23,9 @@ ValidationXSD::~ValidationXSD()
 	delete this->validator;
 }
 
+/***
+ * Valide un XML à partir d'un XSD traité précédemment
+ */
 bool ValidationXSD::validation(Element * element)
 {
 	map<string,string>::iterator eltRegex = this->validator->find(element->GetName());
@@ -44,6 +47,7 @@ bool ValidationXSD::validation(Element * element)
 		reti = regexec(&regex, element->GetChildrenTag(str).c_str(), 0, NULL, 0);
 		delete str;
 		regfree(&regex);
+
 
 //		string * str2 = new string();
 //		cout << element->GetName() << ":" << eltRegex->second

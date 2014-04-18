@@ -17,8 +17,19 @@ class Element : public Item
 		vector<Attribute *> * attributes;
 		vector<Item *> * items;
 
+		// XSD
+		string GetXsdComplexTypeRule(Element * complexType, string * str);
+		string GetXsdElementRule(Element * element, string * regexSeparator, string * str, bool getChildren);
+
 		// Transformation XSL
 		string* getAttributeValue(string atrName);
+		void traiterResultat(Element *res);
+		void traiterValueOf(Element *elemXLS,Element *elemXML);
+		void traiterApplyTemplate(Element *elemXLS,Element *elemXML, Element *racineXLS, Element *racineXML);
+		void traiterForEach(string chemin,Element *elemXLS,Element *elemXML, Element *racineXLS, Element *racineXML);
+		void addChild(Item *it){
+			items->push_back(it);
+		}
 		
 	public :
 		Element(string * n, vector<Attribute *> * a, vector<Item *> * i);
@@ -39,8 +50,6 @@ class Element : public Item
 		string GetChildrenTag(string * str);
 		// Element doit etre un element XSD
 		string GetRule(string * str);
-		string GetXsdComplexTypeRule(Element * complexType, string * str);
-		string GetXsdElementRule(Element * element, string * regexSeparator, string * str, bool getChildren);
 
 		/*  Transformation de l'arbre */
 		//traiter le template sur un element XML recu en entree
@@ -48,18 +57,9 @@ class Element : public Item
 		// retrouver le template (pour l'instant direct dans l'arbre XLS)
 		Element* getTemplateMatching(string* matchName);
 
-		private:
-			void traiterResultat(Element *res);
-			void traiterValueOf(Element *elemXLS,Element *elemXML);
-			void traiterApplyTemplate(Element *elemXLS,Element *elemXML, Element *racineXLS, Element *racineXML);
-			void traiterForEach(string chemin,Element *elemXLS,Element *elemXML, Element *racineXLS, Element *racineXML);
-			void addChild(Item *it){
-				items->push_back(it);
-			}
-		public: 
-			void displayResultatTransf(){
-				(*items)[0]->display();
-			}
+		void displayResultatTransf(){
+			(*items)[0]->display();
+		}
 };
 
 #endif
