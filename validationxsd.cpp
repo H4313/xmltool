@@ -48,12 +48,15 @@ bool ValidationXSD::validation(Element * element)
 		delete str;
 		regfree(&regex);
 
-
-//		string * str2 = new string();
-//		cout << element->GetName() << ":" << eltRegex->second
-//				<< "\nMatch : " << reti
-//				<< "\n" << element->GetChildrenTag(str2)  << "\n" << endl;
-//		delete str2;
+#ifdef XSDPRINT
+		string * str2 = new string();
+		cout << "\nItem : " << element->GetName()
+				<< "\nRegex : " << eltRegex->second
+				<<  "\nRepresentation des fils : " << element->GetChildrenTag(str2)
+				<< "\nMatch : " << ((reti != 0) ? "Non" : "Oui")
+				<< "\n" << endl;
+		delete str2;
+#endif
 
 		if( reti != 0 )
 		{
